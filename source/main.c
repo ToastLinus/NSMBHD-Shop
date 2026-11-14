@@ -27,15 +27,20 @@ static const PokemonGame games[] = {
     {"Mond", "Nintendo 3DS", "Abenteuer", "2016", "Alola mit einer besonderen Tageszeit-Umkehr.", 1},
     {"Ultrasonne", "Nintendo 3DS", "Abenteuer", "2017", "Eine erweiterte Reise durch Alola.", 1},
     {"Ultramond", "Nintendo 3DS", "Abenteuer", "2017", "Neue Abenteuer und Geheimnisse in Alola.", 1},
+    {"Pokemon Radical Red", "GBA-ROM-Hack", "ROM-Hack", "2022", "Ein anspruchsvoller FireRed-Hack mit vielen modernen Kampf- und Teamfunktionen.", 3},
+    {"Pokemon Unbound", "GBA-ROM-Hack", "ROM-Hack", "2021", "Ein umfangreiches Fan-Abenteuer in der Borrius-Region.", 3},
+    {"Pokemon Gaia", "GBA-ROM-Hack", "ROM-Hack", "2018", "Ein grosses Abenteuer in der Orbtus-Region mit neuen Geschichten.", 3},
+    {"Pokemon Glazed", "GBA-ROM-Hack", "ROM-Hack", "2012", "Ein Fan-Abenteuer mit mehreren Regionen und eigener Handlung.", 3},
+    {"Pokemon Inclement Emerald", "GBA-ROM-Hack", "ROM-Hack", "2022", "Eine deutlich anspruchsvollere Version von Pokemon Smaragd.", 3},
     {"Mystery Dungeon: Erkundungsteam Himmel", "Nintendo DS", "Spin-off", "2009", "Ein Dungeon-Abenteuer, in dem du selbst Pokemon bist.", 2},
     {"Pokemon Ranger: Finsternis über Almia", "Nintendo DS", "Spin-off", "2008", "Als Ranger Pokemon beschützen und Missionen lösen.", 2},
     {"Super Mystery Dungeon", "Nintendo 3DS", "Spin-off", "2016", "Ein grosses Mystery-Dungeon-Abenteuer mit vielen Pokemon.", 2}
 };
 #define GAME_COUNT ((int)(sizeof(games) / sizeof(games[0])))
-#define CATEGORY_COUNT 6
+#define CATEGORY_COUNT 7
 
 static const char *categories[CATEGORY_COUNT] = {
-    "Alle Spiele", "Nintendo DS", "Nintendo 3DS", "Spin-offs", "Merkliste", "Info"
+    "Alle Spiele", "Nintendo DS", "Nintendo 3DS", "Spin-offs", "ROM-Hacks", "Merkliste", "Info"
 };
 
 static PrintConsole top, bottom;
@@ -53,7 +58,8 @@ static int visible_count(void) {
             (category == 1 && games[i].platform == 0) ||
             (category == 2 && games[i].platform == 1) ||
             (category == 3 && games[i].platform == 2) ||
-            (category == 4 && favourites[i]);
+            (category == 4 && games[i].platform == 3) ||
+            (category == 5 && favourites[i]);
         if (show) ++n;
     }
     return n;
@@ -294,7 +300,7 @@ int main(void) {
             if (down & KEY_UP) { category = (category + CATEGORY_COUNT - 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_DOWN) { category = (category + 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_A) {
-                if (category == 5) {
+                if (category == 6) {
                     snprintf(status_line, sizeof(status_line), "Pokemon Hub - Bibliothek und Entdecker");
                 } else {
                     view = 1;

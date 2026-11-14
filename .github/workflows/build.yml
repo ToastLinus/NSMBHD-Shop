@@ -42,7 +42,7 @@ jobs:
           command -v bannertool
           command -v makerom
           bannertool --help >/dev/null
-          makerom --help >/dev/null
+          makerom -help >/dev/null
 
       - name: Build CIA
         run: make clean && make

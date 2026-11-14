@@ -10,28 +10,26 @@ typedef struct {
     const char *description;
     const char *url;
     int system;
-    int kaizo;
 } Project;
 
 static const Project projects[] = {
-    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 0},
+    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
     {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
     {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
     {"New Super Mario Bros. U DS", "Skylander", "1.08 listed", "Finished", "A DS community project inspired by New Super Mario Bros. U.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 0},
-    {"Kaizo 1", "Play Gamer", "Latest listed", "Finished (4 levels)", "A short, Kaizo-style New Super Mario Bros. DS hack with four listed levels.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 1},
     {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 1},
     {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 1},
-    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, 0},
+    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
     {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
     {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
     {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
     {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
-#define CATEGORY_COUNT 6
+#define CATEGORY_COUNT 5
 
 static const char *categories[CATEGORY_COUNT] = {
-    "Featured projects", "NSMB DS", "NSMB 2 (3DS)", "Kaizo & Hard Hacks", "Latest updates", "About & safety"
+    "Featured projects", "NSMB DS", "NSMB 2 (3DS)", "Latest updates", "About & safety"
 };
 
 static PrintConsole top, bottom;
@@ -41,11 +39,10 @@ static int view = 0; /* 0 categories, 1 project list, 2 project details */
 
 static int visible_project_count(void) {
     if (category == 0) return (int)PROJECT_COUNT;
-    if (category == 1 || category == 2 || category == 3) {
+    if (category == 1 || category == 2) {
         int count = 0;
-        for (int i = 0; i < (int)PROJECT_COUNT; i++) {
-            if (category == 3 ? projects[i].kaizo : projects[i].system == category - 1) count++;
-        }
+        for (int i = 0; i < (int)PROJECT_COUNT; i++)
+            if (projects[i].system == category - 1) count++;
         return count;
     }
     return 0;
@@ -55,7 +52,7 @@ static int project_at(int visible_index) {
     if (category == 0) return visible_index;
     int count = 0;
     for (int i = 0; i < (int)PROJECT_COUNT; i++) {
-        if (category == 3 ? projects[i].kaizo : projects[i].system == category - 1) {
+        if (projects[i].system == category - 1) {
             if (count == visible_index) return i;
             count++;
         }
@@ -167,7 +164,7 @@ int main(void) {
             if (down & KEY_UP) { category = (category + CATEGORY_COUNT - 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_DOWN) { category = (category + 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_A) {
-                if (category <= 3) { view = 1; project_index = 0; }
+                if (category <= 2) { view = 1; project_index = 0; }
                 else if (category == 5) view = 2;
                 else view = 2;
                 changed = true;
@@ -180,7 +177,7 @@ int main(void) {
             if (down & KEY_A && count > 0) { view = 2; changed = true; }
             if (down & KEY_B) { view = 0; changed = true; }
         } else {
-            if (down & KEY_B) { view = (category <= 3) ? 1 : 0; changed = true; }
+            if (down & KEY_B) { view = (category <= 2) ? 1 : 0; changed = true; }
         }
 
         if (changed) draw_all();

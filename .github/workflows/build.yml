@@ -15,15 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: devkitpro/devkitarm:latest
+    env:
+      PATH: /opt/devkitpro/devkitARM/bin:/opt/devkitpro/tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     steps:
       - name: Inspect preinstalled 3DS toolchain
         run: |
+          echo "=== Compiler ==="
+          command -v arm-none-eabi-gcc
+          arm-none-eabi-gcc --version
           echo "=== 3DS startup and library files ==="
           find /opt/devkitpro -type f \( -name '3dsx_crt0.o' -o -name 'libctru.a' -o -name '3dsx.specs' -o -name '3ds_rules' \)
-          echo "=== Compiler search paths ==="
-          arm-none-eabi-gcc -print-search-dirs
-          echo "=== Installed development packages ==="
-          ls -la /opt/devkitpro/devkitARM/arm-none-eabi/lib
 
       - name: Checkout
         uses: actions/checkout@v4

@@ -19,6 +19,7 @@ jobs:
       - name: Install 3DS development libraries
         run: |
           dkp-pacman -Sy --noconfirm
+          dkp-pacman -S --noconfirm 3ds-dev
           dkp-pacman -S --noconfirm libctru
           find /opt/devkitpro -name 3ds_rules -o -name 3ds.h
 

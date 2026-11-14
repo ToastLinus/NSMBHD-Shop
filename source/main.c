@@ -132,27 +132,33 @@ static int category = 0;
 static int project_index = 0;
 static int view = 0; /* 0 categories, 1 project list, 2 project details */
 
+static bool is_direct_download(const Project *p) {
+    bool allowed_type = strcmp(p->file_ext, "cia") == 0 ||
+                        strcmp(p->file_ext, "3dsx") == 0 ||
+                        strcmp(p->file_ext, "nds") == 0;
+    return p->redistribution_authorized && p->download_url[0] && allowed_type;
+}
+
 static int visible_project_count(void) {
-    if (category == 0) return (int)PROJECT_COUNT;
-    if (category == 1 || category == 2) {
-        int count = 0;
-        for (int i = 0; i < (int)PROJECT_COUNT; i++)
-            if (projects[i].system == category - 1) count++;
-        return count;
+    int count = 0;
+    for (int i = 0; i < (int)PROJECT_COUNT; i++) {
+        if (is_direct_download(&projects[i]) &&
+            (category == 0 || projects[i].system == category - 1))
+            count++;
     }
-    return 0;
+    return count;
 }
 
 static int project_at(int visible_index) {
-    if (category == 0) return visible_index;
     int count = 0;
     for (int i = 0; i < (int)PROJECT_COUNT; i++) {
-        if (projects[i].system == category - 1) {
+        if (is_direct_download(&projects[i]) &&
+            (category == 0 || projects[i].system == category - 1)) {
             if (count == visible_index) return i;
             count++;
         }
     }
-    return 0;
+    return -1;
 }
 
 static void draw_top(void) {
@@ -174,7 +180,9 @@ static void draw_top(void) {
         printf("\x1b[90m  Choose a section with UP / DOWN.\x1b[0m\n");
     } else if (view == 1) {
         int count = visible_project_count();
-        printf("\x1b[37m  %s  \x1b[90m(%d projects)\x1b[0m\n\n", categories[category], count);
+        printf("\x1b[37m  %s  \x1b[90m(%d direkt ladbare Spiele)\x1b[0m\n\n", categories[category], count);
+        if (count == 0)
+            printf("\x1b[33m  Noch keine geprüfte, freigegebene\n  CIA-, 3DSX- oder NDS-Datei vorhanden.\x1b[0m\n\n");
         for (int i = 0; i < count && i < 9; i++) {
             const Project *p = &projects[project_at(i)];
             if (i == project_index)
@@ -185,7 +193,12 @@ static void draw_top(void) {
         }
         printf("\x1b[90m  A: project details   B: sections\x1b[0m\n");
     } else {
-        const Project *p = &projects[project_at(project_index)];
+        int selected = project_at(project_index);
+        if (selected < 0) {
+            printf("\x1b[33m  No verified direct downloads yet.\x1b[0m\n");
+            return;
+        }
+        const Project *p = &projects[selected];
         printf("\x1b[36m  PROJECT DETAILS\x1b[0m\n\n");
         printf("\x1b[37m  %s\x1b[0m\n\n", p->title);
         printf("\x1b[90m  Developer: \x1b[37m%s\x1b[0m\n", p->creator);
@@ -218,14 +231,31 @@ static void draw_bottom(void) {
         printf("\n\x1b[36m  A\x1b[0m  Open section\n");
         printf("\x1b[36m  UP / DOWN\x1b[0m  Navigate\n");
     } else if (view == 1) {
-        const Project *p = &projects[project_at(project_index)];
+        int selected = project_at(project_index);
+        if (selected < 0) {
+            printf("\x1b[33m  No verified direct downloads yet.\x1b[0m\n");
+        } else {
+        const Project *p = &projects[selected];
         printf("\x1b[36m  %s\x1b[0m\n\n", p->title);
         printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
         printf("\x1b[90m  Developer: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
         printf("\x1b[36m  A\x1b[0m  View details\n");
         printf("\x1b[36m  B\x1b[0m  Back to sections\n");
+        } else {
+            printf("\x1b[33m  No directly downloadable games yet.\x1b[0m\n");
+            printf("\x1b[36m  B\x1b[0m  Back to sections\n");
+        }
     } else {
-        const Project *p = &projects[project_at(project_index)];
+        int selected = project_at(project_index);
+        if (selected < 0) {
+            printf("\x1b[33m  Keine direkt ladbaren Spiele vorhanden.\x1b[0m\n");
+            printf("\x1b[90m  Nur geprüfte, freigegebene NDS/CIA/3DSX-Dateien erscheinen hier.\x1b[0m\n");
+            printf("\n  B: Zurück\n");
+            printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
+            printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
+            return;
+        }
+        const Project *p = &projects[selected];
         printf("\x1b[36m  PROJECT SUMMARY\x1b[0m\n\n");
         printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
         printf("\x1b[90m  This entry is a directory listing,\n  not a hosted game download.\n\n");
@@ -278,10 +308,7 @@ int main(void) {
                 download_project(&projects[project_at(project_index)]);
                 changed = true;
             }
-            if ((down & KEY_Y) && category <= 2) {
-                open_project_page(&projects[project_at(project_index)]);
-                changed = true;
-            }
+
             if (down & KEY_B) { view = (category <= 2) ? 1 : 0; changed = true; }
         }
 

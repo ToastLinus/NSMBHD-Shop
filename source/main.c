@@ -31,7 +31,8 @@ static void draw_screen(PrintConsole *screen, const char *heading, int selected)
 
 int main(void) {
     gfxInitDefault();
-    consoleInit(GFX_TOP, NULL);
+    PrintConsole top;
+    consoleInit(GFX_TOP, &top);
     PrintConsole bottom;
     consoleInit(GFX_BOTTOM, &bottom);
 
@@ -47,7 +48,7 @@ int main(void) {
         if (down & KEY_DOWN) selected = (selected + 1) % count;
         if (down & KEY_B) running = false;
 
-        draw_screen(gfxGetConsole(GFX_TOP), "DISCOVER MARIO MODS", selected);
+        draw_screen(&top, "DISCOVER MARIO MODS", selected);
         consoleSelect(&bottom);
         printf("\x1b[2J");
         printf("\x1b[1;1H\x1b[36mPROJECT DETAILS\x1b[0m\n\n");

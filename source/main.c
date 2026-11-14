@@ -1,6 +1,7 @@
 #include <3ds.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 
 typedef struct {
     const char *title;
@@ -10,19 +11,22 @@ typedef struct {
     const char *description;
     const char *url;
     int system;
+    const char *download_url;
+    const char *file_ext;
+    int redistribution_authorized;
 } Project;
 
 static const Project projects[] = {
-    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
-    {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
-    {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0},
-    {"New Super Mario Bros. U DS", "Skylander", "1.08 listed", "Finished", "A DS community project inspired by New Super Mario Bros. U.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 0},
-    {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 1},
-    {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, 1},
-    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
-    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
-    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
-    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1},
+    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"New Super Mario Bros. U DS", "Skylander", "1.08 listed", "Finished", "A DS community project inspired by New Super Mario Bros. U.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
+    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
     {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
@@ -31,6 +35,74 @@ static const Project projects[] = {
 static const char *categories[CATEGORY_COUNT] = {
     "Featured projects", "NSMB DS", "NSMB 2 (3DS)", "Latest updates", "About & safety"
 };
+
+
+static char download_status[128] = "Select a project and press X to download.";
+
+static bool download_project(const Project *p) {
+    if (!p->redistribution_authorized || !p->download_url[0] || !p->file_ext[0]) {
+        snprintf(download_status, sizeof(download_status), "No creator-approved file is configured yet.");
+        return false;
+    }
+
+    mkdir("sdmc:/3ds", 0777);
+    mkdir("sdmc:/3ds/NSMBHD-Shop", 0777);
+    char path[160];
+    snprintf(path, sizeof(path), "sdmc:/3ds/NSMBHD-Shop/%s.%s",
+             p->title[0] ? p->title : "project", p->file_ext);
+
+    httpcContext context;
+    Result ret = httpcOpenContext(&context, HTTPC_METHOD_GET, p->download_url, 1);
+    if (R_FAILED(ret)) {
+        snprintf(download_status, sizeof(download_status), "Could not connect to download server.");
+        return false;
+    }
+
+    if (strncmp(p->download_url, "https://", 8) == 0)
+        httpcAddDefaultCert(&context, SSLC_DefaultRootCert_DigiCert_EV);
+
+    ret = httpcBeginRequest(&context);
+    u32 status = 0;
+    if (R_SUCCEEDED(ret)) ret = httpcGetResponseStatusCode(&context, &status);
+    if (R_FAILED(ret) || status < 200 || status >= 300) {
+        httpcCloseContext(&context);
+        snprintf(download_status, sizeof(download_status), "Download server returned an error.");
+        return false;
+    }
+
+    FILE *out = fopen(path, "wb");
+    if (!out) {
+        httpcCloseContext(&context);
+        snprintf(download_status, sizeof(download_status), "Could not write to the SD card.");
+        return false;
+    }
+
+    u8 buffer[0x4000];
+    bool ok = true;
+    while (aptMainLoop()) {
+        u32 received = 0;
+        ret = httpcDownloadData(&context, buffer, sizeof(buffer), &received);
+        if (received && fwrite(buffer, 1, received, out) != received) {
+            ok = false;
+            break;
+        }
+        if (ret == HTTPC_RESULTCODE_DOWNLOADPENDING) continue;
+        if (R_FAILED(ret) || received == 0) {
+            if (R_FAILED(ret)) ok = false;
+            break;
+        }
+    }
+
+    fclose(out);
+    httpcCloseContext(&context);
+    if (!ok) {
+        remove(path);
+        snprintf(download_status, sizeof(download_status), "Download failed; incomplete file removed.");
+        return false;
+    }
+    snprintf(download_status, sizeof(download_status), "Saved to /3ds/NSMBHD-Shop on SD card.");
+    return true;
+}
 
 static PrintConsole top, bottom;
 static int category = 0;
@@ -150,7 +222,7 @@ static void draw_all(void) {
 }
 
 int main(void) {
-    gfxInitDefault();
+    gfxInitDefault();\n    httpcInit(0);
     consoleInit(GFX_TOP, &top);
     consoleInit(GFX_BOTTOM, &bottom);
     draw_all();
@@ -177,6 +249,10 @@ int main(void) {
             if (down & KEY_A && count > 0) { view = 2; changed = true; }
             if (down & KEY_B) { view = 0; changed = true; }
         } else {
+            if ((down & KEY_X) && category <= 2) {
+                download_project(&projects[project_at(project_index)]);
+                changed = true;
+            }
             if (down & KEY_B) { view = (category <= 2) ? 1 : 0; changed = true; }
         }
 
@@ -184,6 +260,6 @@ int main(void) {
         gspWaitForVBlank();
     }
 
-    gfxExit();
+    httpcExit();\n    gfxExit();
     return 0;
 }

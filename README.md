@@ -1,14 +1,23 @@
-# NSMBHD Shop
+# Mario 2D Shop
 
-A Nintendo 3DS catalog for directly downloadable New Super Mario Bros. community games.
+A Nintendo 3DS catalog for 2D Mario fan projects inspired by New Super Mario Bros. DS and New Super Mario Bros. 2.
 
-## Strict download rule
+## What the shop does
 
-The shop lists a project only when all of the following are verified:
-- A standalone `.nds`, `.cia`, or `.3dsx` file is available.
-- The direct download URL is configured.
-- Redistribution is explicitly authorized by the creator or rights holder.
+- Lists Mario DS projects and NSMB2 3DS projects.
+- Shows the creator, version, status, and a project/download page.
+- Press **X** on a project details screen to open its source or download page in the 3DS browser.
+- The catalog currently contains 36 entries.
 
-Patch-only projects, project pages, archives, and files that require an original commercial game are not shown as downloadable games. No Nintendo game ROMs or copyrighted game data are hosted or redistributed.
+## Important download information
 
-At present, no project in the catalog has met all three requirements, so the game list is intentionally empty rather than showing misleading download buttons.
+Most fan projects are patches or demos, not standalone `.nds`, `.cia`, or `.3dsx` games. The download pages explain what each project needs. Many require a legally obtained original copy of New Super Mario Bros. DS or New Super Mario Bros. 2.
+
+The shop opens the original creator/community page; it does not turn a patch into a playable game, and it does not host or redistribute Nintendo ROMs. Always read the project page before downloading and use only files the project creator makes available.
+
+## Sources
+
+- [NSMB DS project list](https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/)
+- [NSMB2 3DS project list](https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/)
+- [Newer Super Mario Bros. DS official page](https://newerteam.com/ds/)
+- [NSMB DS Co-op releases](https://github.com/ShaneDoyle/nsmb-coop/releases/tag/v2.5)

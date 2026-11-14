@@ -144,6 +144,32 @@
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false
+    },
+    {
+      "id": "smbnext-sunset-shores",
+      "title": "Super Mario Bros. Next: Sunset Shores",
+      "system": "3DS",
+      "creator": "SMBNext Team",
+      "version": "Released mod",
+      "status": "Finished",
+      "description": "A New Super Mario Bros. 2 modification. Requires an existing copy of NSMB2; not a standalone CIA, 3DSX or NDS game.",
+      "project_url": "https://smbnext.net/sunsetshores",
+      "download_url": "",
+      "download_type": "project-page",
+      "redistribution_authorized": false
+    },
+    {
+      "id": "smbnext-lost-levels",
+      "title": "Super Mario Bros. Next: The Lost Levels",
+      "system": "3DS",
+      "creator": "SMBNext Team",
+      "version": "Parts 1 and 2",
+      "status": "Released mod",
+      "description": "Additional NSMB2 stages. Requires an existing copy of NSMB2 and game patching; not a standalone CIA, 3DSX or NDS game.",
+      "project_url": "https://smbnext.net/lostlevels",
+      "download_url": "",
+      "download_type": "project-page",
+      "redistribution_authorized": false
     }
   ]
 }

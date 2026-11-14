@@ -51,7 +51,7 @@ $(TARGET).bnr: $(ROOT)/build/banner.png $(ROOT)/build/banner.wav
 	bannertool makebanner -i $(ROOT)/build/banner.png -a $(ROOT)/build/banner.wav -o $@
 
 $(TARGET).cia: $(TARGET).elf $(TARGET).smdh $(TARGET).bnr
-	makerom -f cia -o $@ -elf $(TARGET).elf -icon $(TARGET).smdh -banner $(TARGET).bnr
+	makerom -f cia -o $@ -target t -desc app:4 -elf $(TARGET).elf -icon $(TARGET).smdh -banner $(TARGET).bnr
 
 clean:
 	@rm -f *.o *.elf *.3dsx *.cia *.smdh *.bnr

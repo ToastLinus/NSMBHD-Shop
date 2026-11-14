@@ -230,11 +230,8 @@ static void draw_bottom(void) {
         printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
         printf("\x1b[90m  This entry is a directory listing,\n  not a hosted game download.\n\n");
         printf("\x1b[33m  PROJECT ACTIONS\x1b[0m\n");
-        printf("\x1b[36m  Y  Open official project page\x1b[0m\n");
-        if (p->redistribution_authorized && p->download_url[0])
-            printf("\x1b[36m  X  Download approved game file\x1b[0m\n");
-        else
-            printf("\x1b[90m  No playable CIA/3DSX/NDS file yet\x1b[0m\n");
+        printf("\x1b[36m  X  Open project / download page\x1b[0m\n");
+        printf("\x1b[90m  Direct game file only if creator provides one.\x1b[0m\n");
         printf("\x1b[36m  B  Back to project list\x1b[0m\n");
     }
     printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
@@ -278,7 +275,7 @@ int main(void) {
             if (down & KEY_B) { view = 0; changed = true; }
         } else {
             if ((down & KEY_X) && category <= 2) {
-                download_project(&projects[project_at(project_index)]);
+                open_project_page(&projects[project_at(project_index)]);
                 changed = true;
             }
             if ((down & KEY_Y) && category <= 2) {

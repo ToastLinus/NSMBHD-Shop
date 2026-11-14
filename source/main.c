@@ -28,6 +28,8 @@ static const Project projects[] = {
     {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/thread/5182-new-super-mario-bros-2-anew-demo-v-1-2/", 1, "", "", 0},
     {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/thread/5560-nsmb2-mastermode-demo/", 1, "", "", 0},
     {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://kuribo64.net/board/thread.php?id=3552", 1, "", "", 0}
+    {"Super Mario Bros. Next: Sunset Shores", "SMBNext Team", "Released mod", "Finished", "A New Super Mario Bros. 2 modification. Requires your own copy of NSMB2; it is not a standalone CIA, 3DSX or NDS game.", "https://smbnext.net/sunsetshores", 1, "", "", 0},
+    {"Super Mario Bros. Next: The Lost Levels", "SMBNext Team", "Parts 1 and 2", "Released mod", "A collection of additional NSMB2 stages. Requires your own copy of NSMB2 and game patching; it is not a standalone CIA, 3DSX or NDS game.", "https://smbnext.net/lostlevels", 1, "", "", 0}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
 #define CATEGORY_COUNT 5

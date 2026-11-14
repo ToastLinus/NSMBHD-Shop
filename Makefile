@@ -41,7 +41,7 @@ all: $(TARGET).cia
 3dsx_crt0.o:
 	ln -sf $(DEVKITARM)/arm-none-eabi/lib/armv6k/fpu/3dsx_crt0.o $@
 
-$(TARGET).elf: $(OFILES) 3dsx_crt0.o
+$(TARGET).elf: $(OFILES) | 3dsx_crt0.o
 	$(CC) $(LDFLAGS) -L$(DEVKITPRO)/libctru/lib -L$(DEVKITPRO)/devkitARM/arm-none-eabi/lib $^ $(LIBS) -o $@
 
 $(TARGET).smdh:

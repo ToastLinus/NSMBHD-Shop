@@ -36,9 +36,9 @@ jobs:
           cmake -S /tmp/3ds-tools/bannertool-src -B /tmp/3ds-tools/bannertool-build -DCMAKE_BUILD_TYPE=Release
           cmake --build /tmp/3ds-tools/bannertool-build --parallel 2
           install -m 755 /tmp/3ds-tools/bannertool-build/bannertool /usr/local/bin/bannertool
-          curl -fL "https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.19.0/makerom-v0.19.0-ubuntu_x86_64.zip" -o /tmp/3ds-tools/makerom.zip
-          unzip -q /tmp/3ds-tools/makerom.zip -d /tmp/3ds-tools/makerom
-          find /tmp/3ds-tools/makerom -type f -name makerom -exec install -m 755 {} /usr/local/bin/makerom \;
+          git clone --depth 1 https://github.com/3DSGuy/Project_CTR.git /tmp/3ds-tools/project-ctr
+          make -C /tmp/3ds-tools/project-ctr/makerom -j2
+          install -m 755 /tmp/3ds-tools/project-ctr/makerom/bin/makerom /usr/local/bin/makerom
           command -v bannertool
           command -v makerom
           bannertool --help >/dev/null

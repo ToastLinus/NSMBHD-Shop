@@ -44,6 +44,36 @@ jobs:
           test -x /usr/local/bin/bannertool
           test -x /usr/local/bin/makerom
 
+      - name: Generate 3DS icon
+        run: |
+          mkdir -p build
+          python3 - <<'PY'
+          import struct, zlib
+          w = h = 48
+          rows = []
+          for y in range(h):
+              row = bytearray([0])
+              for x in range(w):
+                  # Dark navy tile with a bright cyan pixel-art speech bubble.
+                  inside = 8 <= x <= 39 and 8 <= y <= 35
+                  edge = inside and (x in (8, 39) or y in (8, 35))
+                  tail = 27 <= x <= 36 and 32 <= y <= 41 and x >= y - 5
+                  if edge or tail:
+                      row.extend((34, 211, 238, 255))
+                  elif inside:
+                      row.extend((8, 24, 48, 255))
+                  else:
+                      row.extend((4, 12, 30, 255))
+              rows.append(bytes(row))
+          def chunk(kind, data):
+              return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
+          png = b"\\x89PNG\\r\\n\\x1a\\n"
+          png += chunk(b"IHDR", struct.pack(">2I5B", w, h, 8, 6, 0, 0, 0))
+          png += chunk(b"IDAT", zlib.compress(b"".join(rows), 9))
+          png += chunk(b"IEND", b"")
+          open("build/icon.png", "wb").write(png)
+          PY
+
       - name: Build CIA
         run: make clean && make
 

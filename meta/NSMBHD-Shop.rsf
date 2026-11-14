@@ -1,0 +1,17 @@
+BasicInfo:
+  Title: "NSMBShop"
+  CompanyCode: "00"
+  ProductCode: "CTR-H-NSMB"
+  ContentType: Application
+  Logo: Homebrew
+
+TitleInfo:
+  UniqueId: 0xF00A
+  Category: Application
+
+Option:
+  UseOnSD: true
+  EnableCompress: true
+  FreeProductCode: true
+  EnableCrypt: false
+  MediaFootPadding: false

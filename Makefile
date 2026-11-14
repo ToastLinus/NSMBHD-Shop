@@ -37,7 +37,7 @@ VPATH  := $(ROOT)/$(SOURCES)
 all: $(TARGET).cia
 
 $(TARGET).elf: $(OFILES)
-	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
+	$(CC) $(LDFLAGS) -L$(DEVKITPRO)/libctru/lib -L$(DEVKITPRO)/devkitARM/arm-none-eabi/lib $^ $(LIBS) -o $@
 
 $(TARGET).smdh:
 	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -o $@

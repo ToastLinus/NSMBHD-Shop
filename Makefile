@@ -44,8 +44,8 @@ all: $(TARGET).cia
 $(TARGET).elf: $(OFILES) | 3dsx_crt0.o
 	$(CC) $(LDFLAGS) -L$(DEVKITARM)/arm-none-eabi/lib/armv6k/fpu -L$(DEVKITPRO)/libctru/lib -L$(DEVKITARM)/arm-none-eabi/lib $^ $(LIBS) -o $@
 
-$(TARGET).smdh: icon.png
-	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i icon.png -o $@
+$(TARGET).smdh: $(ROOT)/build/icon.png
+	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(ROOT)/build/icon.png -o $@
 
 $(TARGET).bnr:
 	bannertool makebanner -i $(DEVKITPRO)/tools/3dslink/banner.png -o $@

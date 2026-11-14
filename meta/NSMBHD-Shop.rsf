@@ -1,7 +1,7 @@
 BasicInfo:
-  Title: "NSMBShop"
+  Title: "PokemonHub"
   CompanyCode: "00"
-  ProductCode: "CTR-H-NSMB"
+  ProductCode: "CTR-H-PKMN"
   ContentType: Application
   Logo: Homebrew
 

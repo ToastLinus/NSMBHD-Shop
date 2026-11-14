@@ -1,23 +1,29 @@
-# Mario 2D Shop
+# Pokemon Hub for Nintendo 3DS
 
-A Nintendo 3DS catalog for 2D Mario fan projects inspired by New Super Mario Bros. DS and New Super Mario Bros. 2.
+A small, illustrated Pokémon game library and discovery hub for the Nintendo 3DS.
 
-## What the shop does
+## Current features
 
-- Lists Mario DS projects and NSMB2 3DS projects.
-- Shows the creator, version, status, and a project/download page.
-- Press **X** on a project details screen to open its source or download page in the 3DS browser.
-- The catalog currently contains 36 entries.
+- Browse a curated list of Pokémon games for Nintendo DS and Nintendo 3DS.
+- Separate the main-series games and spin-offs.
+- Open a game card with its system, release year, genre, and a short description.
+- Keep a temporary in-session favourites list.
+- Get a random suggestion when you cannot decide what to play.
+- Drawn framebuffer artwork and a Poké Ball-inspired graphic; the main visual is not made from keyboard symbols.
 
-## Important download information
+## Controls
 
-Most fan projects are patches or demos, not standalone `.nds`, `.cia`, or `.3dsx` games. The download pages explain what each project needs. Many require a legally obtained original copy of New Super Mario Bros. DS or New Super Mario Bros. 2.
+- **Up / Down:** Navigate.
+- **A:** Open a section or game card.
+- **X:** Add or remove a game from the temporary favourites list.
+- **Y:** Pick a random game.
+- **B:** Go back.
+- **START:** Exit.
 
-The shop opens the original creator/community page; it does not turn a patch into a playable game, and it does not host or redistribute Nintendo ROMs. Always read the project page before downloading and use only files the project creator makes available.
+## Important notes
 
-## Sources
+This is a discovery and organization app, not a ROM downloader. It does not include or distribute Nintendo game files. The favourites list currently lasts only until the app is closed; persistent save data and user-editable collection management are future improvements.
 
-- [NSMB DS project list](https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/)
-- [NSMB2 3DS project list](https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/)
-- [Newer Super Mario Bros. DS official page](https://newerteam.com/ds/)
-- [NSMB DS Co-op releases](https://github.com/ShaneDoyle/nsmb-coop/releases/tag/v2.5)
+## Build
+
+The GitHub Actions workflow builds the installable CIA. The output filename remains NSMBHD-Shop.cia to match the repository name.

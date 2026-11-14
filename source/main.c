@@ -208,9 +208,14 @@ static void draw_bottom(void) {
         printf("\x1b[90m  This entry is a directory listing,\n  not a hosted game download.\n\n");
         printf("\x1b[33m  DOWNLOADS\x1b[0m\n");
         printf("\x1b[37m  Open the source page shown above\n  to check the creator's current files.\n\n");
+        if (p->redistribution_authorized && p->download_url[0])
+            printf("\x1b[36m  X  Download approved file\x1b[0m\n");
+        else
+            printf("\x1b[90m  No approved download file yet\x1b[0m\n");
         printf("\x1b[36m  B\x1b[0m  Back to project list\n");
     }
-    printf("\n\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
+    printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
+    printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
 }
 
 static void draw_all(void) {
@@ -222,7 +227,8 @@ static void draw_all(void) {
 }
 
 int main(void) {
-    gfxInitDefault();\n    httpcInit(0);
+    gfxInitDefault();
+    httpcInit(0);
     consoleInit(GFX_TOP, &top);
     consoleInit(GFX_BOTTOM, &bottom);
     draw_all();
@@ -260,6 +266,7 @@ int main(void) {
         gspWaitForVBlank();
     }
 
-    httpcExit();\n    gfxExit();
+    httpcExit();
+    gfxExit();
     return 0;
 }

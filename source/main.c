@@ -146,8 +146,15 @@ static void draw_top(void) {
         printf("\x1b[90m  A: Details   B: Zurück\x1b[0m\n");
     } else {
         int selected = project_at(project_index);
+        if (category == 3) {
+            printf("\x1b[36m  ÜBER DEN MARIO 2D SHOP\x1b[0m\n\n");
+            printf("\x1b[37m  Fan-Projekte für New Super Mario Bros. DS und NSMB2.\x1b[0m\n\n");
+            printf("\x1b[90m  X öffnet bei einem Spiel dessen Projekt-/Downloadseite.\x1b[0m\n");
+            printf("\x1b[90m  Viele Downloads sind Patches und brauchen das Originalspiel.\x1b[0m\n");
+            return;
+        }
         if (selected < 0) {
-            printf("\x1b[33m  No project download pages available.\x1b[0m\n");
+            printf("\x1b[33m  Keine Projekt-Downloadseiten vorhanden.\x1b[0m\n");
             return;
         }
         const Project *p = &projects[selected];
@@ -178,7 +185,7 @@ static void draw_bottom(void) {
         else if (category == 2)
             printf("\x1b[37m  NSMB2-Projekte für Nintendo 3DS.\x1b[0m\n");
         else if (category == 3)
-            printf("\x1b[37m  Neuere Mario-Projekte.\x1b[0m\n");
+            printf("\x1b[37m  Hinweise zu Downloadseiten und Originalspielen.\x1b[0m\n");
         else
             printf("\x1b[37m  Downloadseiten der Projekt-Ersteller.\x1b[0m\n");
         printf("\n\x1b[36m  A\x1b[0m  Open section\n");
@@ -192,13 +199,19 @@ static void draw_bottom(void) {
             const Project *p = &projects[selected];
             printf("\x1b[36m  %s\x1b[0m\n\n", p->title);
             printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
-            printf("\x1b[90m  Developer: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
+            printf("\x1b[90m  Ersteller: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
             printf("\x1b[36m  A\x1b[0m  Details anzeigen\n");
         }
         printf("\x1b[36m  B\x1b[0m  Zurück zur Auswahl\n");
     } else {
         int selected = project_at(project_index);
-        if (selected < 0) {
+        if (category == 3) {
+            printf("\x1b[36m  HINWEIS\x1b[0m\n\n");
+            printf("\x1b[37m  Der Shop verteilt keine Nintendo-ROMs.\x1b[0m\n");
+            printf("\x1b[37m  Nutze nur die Downloads der jeweiligen Ersteller.\x1b[0m\n\n");
+            printf("\x1b[90m  Viele Projekte sind Patches für deine eigene\n  Originalversion von NSMB DS oder NSMB2.\x1b[0m\n");
+            printf("\x1b[36m  B  Zurück zur Auswahl\x1b[0m\n");
+        } else if (selected < 0) {
             printf("\x1b[33m  Keine Projektseiten vorhanden.\x1b[0m\n");
             printf("\x1b[90m  X öffnet die Projektseite im Browser.\x1b[0m\n");
             printf("\n\x1b[36m  B\x1b[0m  Zurück\n");

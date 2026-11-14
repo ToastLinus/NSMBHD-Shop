@@ -47,8 +47,8 @@ $(TARGET).elf: $(OFILES) | 3dsx_crt0.o
 $(TARGET).smdh: $(ROOT)/build/icon.png
 	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(ROOT)/build/icon.png -o $@
 
-$(TARGET).bnr: $(ROOT)/build/banner.png
-	bannertool makebanner -i $(ROOT)/build/banner.png -o $@
+$(TARGET).bnr: $(ROOT)/build/banner.png $(ROOT)/build/banner.wav
+	bannertool makebanner -i $(ROOT)/build/banner.png -a $(ROOT)/build/banner.wav -o $@
 
 $(TARGET).cia: $(TARGET).elf $(TARGET).smdh $(TARGET).bnr
 	makerom -f cia -o $@ -elf $(TARGET).elf -icon $(TARGET).smdh -banner $(TARGET).bnr

@@ -10,7 +10,7 @@
       "version": "Latest listed",
       "status": "Finished",
       "description": "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.",
-      "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/",
+      "project_url": "https://newerteam.com/ds/",
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false
@@ -48,11 +48,11 @@
       "creator": "Skylander",
       "version": "1.08 listed",
       "status": "Finished",
-      "description": "A DS community project inspired by New Super Mario Bros. U.",
+      "description": "Creator-uploaded xdelta patch; not a playable NDS file. Requires a compatible clean game dump you own and a patching tool.",
       "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/",
-      "download_url": "",
-      "download_type": "project-page",
-      "redistribution_authorized": false
+      "download_url": "https://nsmbhd.net/file/LOIgZSRJuTiyZtN4/Nsmbudsv1.10.xdelta",
+      "download_type": "xdelta-patch",
+      "redistribution_authorized": true
     },
     {
       "id": "newer-smb-2",
@@ -75,7 +75,7 @@
       "version": "Demo",
       "status": "Demo",
       "description": "A New Super Mario Bros. 2 community project for Nintendo 3DS.",
-      "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/",
+      "project_url": "https://nsmbhd.net/thread/5551-more-super-mario-bros-3ds-demo/",
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false
@@ -88,7 +88,7 @@
       "version": "1.2",
       "status": "Demo",
       "description": "A New Super Mario Bros. 2 hack with a first-world demo listing.",
-      "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/",
+      "project_url": "https://nsmbhd.net/thread/5182-new-super-mario-bros-2-anew-demo-v-1-2/",
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false
@@ -101,7 +101,7 @@
       "version": "Latest listed",
       "status": "Demo",
       "description": "A challenge-focused NSMB2 project with a demo listing.",
-      "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/",
+      "project_url": "https://nsmbhd.net/thread/5560-nsmb2-mastermode-demo/",
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false
@@ -114,7 +114,33 @@
       "version": "Latest listed",
       "status": "Demo",
       "description": "A community project with a four-level demo listing.",
-      "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/",
+      "project_url": "https://kuribo64.net/board/thread.php?id=3552",
+      "download_url": "",
+      "download_type": "project-page",
+      "redistribution_authorized": false
+    },
+    {
+      "id": "kaizo-inspired-mario",
+      "title": "Kaizo Inspired Mario",
+      "system": "DS",
+      "creator": "frjd",
+      "version": "Latest listed",
+      "status": "Cancelled (2 levels)",
+      "description": "A difficult DS project listed as cancelled after two levels.",
+      "project_url": "https://jul.rustedlogic.net/thread.php?id=9237",
+      "download_url": "",
+      "download_type": "project-page",
+      "redistribution_authorized": false
+    },
+    {
+      "id": "new-super-kazio-bros",
+      "title": "New Super Kazio Bros.",
+      "system": "DS",
+      "creator": "Joe Smo",
+      "version": "Beta",
+      "status": "Cancelled (W1 + 11 levels)",
+      "description": "A difficult DS project listed as cancelled; the creator's thread is linked for details.",
+      "project_url": "https://nsmbhd.net/thread/4177-new-super-kaizo-bros/",
       "download_url": "",
       "download_type": "project-page",
       "redistribution_authorized": false

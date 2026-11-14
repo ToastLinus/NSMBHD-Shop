@@ -27,7 +27,7 @@ static const Project projects[] = {
     {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
     {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
     {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1}
+    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
 #define CATEGORY_COUNT 5

@@ -17,17 +17,17 @@ typedef struct {
 } Project;
 
 static const Project projects[] = {
-    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://newerteam.com/ds/", 0, "", "", 0},
     {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
     {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
     {"New Super Mario Bros. U DS", "Skylander", "1.10", "Demo", "Community patch hosted by NSMBHD. This xdelta patch is not a playable NDS file and requires a compatible clean game dump you own and a patching tool.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "https://nsmbhd.net/file/LOIgZSRJuTiyZtN4/Nsmbudsv1.10.xdelta", "xdelta", 1},
-    {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
-    {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
+    {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://jul.rustedlogic.net/thread.php?id=9237", 0, "", "", 0},
+    {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/thread/4177-new-super-kaizo-bros/", 0, "", "", 0},
     {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0}
+    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/thread/5551-more-super-mario-bros-3ds-demo/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/thread/5182-new-super-mario-bros-2-anew-demo-v-1-2/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/thread/5560-nsmb2-mastermode-demo/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://kuribo64.net/board/thread.php?id=3552", 1, "", "", 0}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
 #define CATEGORY_COUNT 5
@@ -38,6 +38,23 @@ static const char *categories[CATEGORY_COUNT] = {
 
 
 static char download_status[128] = "Select a project and press X to download.";
+
+static void open_project_page(const Project *p) {
+    if (!p->url || !p->url[0]) {
+        snprintf(download_status, sizeof(download_status), "No project page is configured.");
+        return;
+    }
+    size_t length = strlen(p->url);
+    if (length >= 0x1000) {
+        snprintf(download_status, sizeof(download_status), "Project URL is too long.");
+        return;
+    }
+    char browser_buffer[0x1000] = {0};
+    memcpy(browser_buffer, p->url, length);
+    browser_buffer[length] = 0;
+    aptLaunchSystemApplet(APPID_WEB, browser_buffer, length + 1, 0);
+    snprintf(download_status, sizeof(download_status), "Returned from project page.");
+}
 
 static bool download_project(const Project *p) {
     if (!p->redistribution_authorized || !p->download_url[0] || !p->file_ext[0]) {
@@ -243,7 +260,6 @@ int main(void) {
             if (down & KEY_DOWN) { category = (category + 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_A) {
                 if (category <= 2) { view = 1; project_index = 0; }
-                else if (category == 5) view = 2;
                 else view = 2;
                 changed = true;
             }
@@ -257,6 +273,10 @@ int main(void) {
         } else {
             if ((down & KEY_X) && category <= 2) {
                 download_project(&projects[project_at(project_index)]);
+                changed = true;
+            }
+            if ((down & KEY_Y) && category <= 2) {
+                open_project_page(&projects[project_at(project_index)]);
                 changed = true;
             }
             if (down & KEY_B) { view = (category <= 2) ? 1 : 0; changed = true; }

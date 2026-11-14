@@ -15,7 +15,7 @@ CFLAGS   += -D__3DS__ -I$(DEVKITPRO)/libctru/include
 CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
 LDFLAGS  := -specs=3dsx.specs -g -Wl,--gc-sections
 LIBS     := -lctru
-LIBDIRS  := $(DEVKITPRO)/libctru
+LIBDIRS  := $(DEVKITPRO)/libctru/lib
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 .PHONY: all clean

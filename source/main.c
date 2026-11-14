@@ -20,7 +20,7 @@ static const Project projects[] = {
     {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://newerteam.com/ds/", 0, "", "", 0},
     {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
     {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
-    {"New Super Mario Bros. U DS", "Skylander", "1.10", "Demo", "Community patch hosted by NSMBHD. This xdelta patch is not a playable NDS file and requires a compatible clean game dump you own and a patching tool.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "https://nsmbhd.net/file/LOIgZSRJuTiyZtN4/Nsmbudsv1.10.xdelta", "xdelta", 1},
+    {"New Super Mario Bros. U DS", "Skylander", "1.10", "Demo", "Project listing. No directly playable CIA, 3DSX or NDS file is verified for the shop yet.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
     {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://jul.rustedlogic.net/thread.php?id=9237", 0, "", "", 0},
     {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/thread/4177-new-super-kaizo-bros/", 0, "", "", 0},
     {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
@@ -57,7 +57,11 @@ static void open_project_page(const Project *p) {
 }
 
 static bool download_project(const Project *p) {
-    if (!p->redistribution_authorized || !p->download_url[0] || !p->file_ext[0]) {
+    /* Only directly playable/homebrew package formats are allowed in this shop. */
+    bool allowed_type = strcmp(p->file_ext, "cia") == 0 ||
+                        strcmp(p->file_ext, "3dsx") == 0 ||
+                        strcmp(p->file_ext, "nds") == 0;
+    if (!p->redistribution_authorized || !p->download_url[0] || !allowed_type) {
         snprintf(download_status, sizeof(download_status), "No creator-approved file is configured yet.");
         return false;
     }
@@ -208,7 +212,7 @@ static void draw_bottom(void) {
         else if (category == 3)
             printf("\x1b[37m  Project versions and new releases\n  will be highlighted here.\x1b[0m\n");
         else
-            printf("\x1b[37m  Fan-made project directory.\n  Only creator-approved files belong here.\x1b[0m\n");
+            printf("\x1b[37m  Fan-made project directory.\n  Only approved CIA, 3DSX or NDS files belong here.\x1b[0m\n");
         printf("\n\x1b[36m  A\x1b[0m  Open section\n");
         printf("\x1b[36m  UP / DOWN\x1b[0m  Navigate\n");
     } else if (view == 1) {
@@ -226,9 +230,9 @@ static void draw_bottom(void) {
         printf("\x1b[33m  PROJECT ACTIONS\x1b[0m\n");
         printf("\x1b[36m  Y  Open official project page\x1b[0m\n");
         if (p->redistribution_authorized && p->download_url[0])
-            printf("\x1b[36m  X  Download approved patch\x1b[0m\n");
+            printf("\x1b[36m  X  Download approved game file\x1b[0m\n");
         else
-            printf("\x1b[90m  No direct patch download\x1b[0m\n");
+            printf("\x1b[90m  No playable CIA/3DSX/NDS file yet\x1b[0m\n");
         printf("\x1b[36m  B  Back to project list\x1b[0m\n");
     }
     printf("\n\x1b[90m  %s\x1b[0m\n", download_status);

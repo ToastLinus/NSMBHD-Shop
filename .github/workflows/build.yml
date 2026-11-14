@@ -47,63 +47,77 @@ jobs:
       - name: Clean previous build
         run: make clean
 
-      - name: Generate 3DS icon
+      - name: Generate Pokemon Hub icon and banner art
         run: |
           mkdir -p build
           python3 - <<'PY'
-          import struct, zlib
-          w = h = 48
-          rows = []
-          for y in range(h):
-              row = bytearray([0])
-              for x in range(w):
-                  # Dark navy tile with a bright cyan pixel-art speech bubble.
-                  inside = 8 <= x <= 39 and 8 <= y <= 35
-                  edge = inside and (x in (8, 39) or y in (8, 35))
-                  tail = 27 <= x <= 36 and 32 <= y <= 41 and x >= y - 5
-                  if edge or tail:
-                      row.extend((34, 211, 238, 255))
-                  elif inside:
-                      row.extend((8, 24, 48, 255))
-                  else:
-                      row.extend((4, 12, 30, 255))
-              rows.append(bytes(row))
-          def chunk(kind, data):
-              return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
-          png = b"\x89PNG\r\n\x1a\n"
-          png += chunk(b"IHDR", struct.pack(">2I5B", w, h, 8, 6, 0, 0, 0))
-          png += chunk(b"IDAT", zlib.compress(b"".join(rows), 9))
-          png += chunk(b"IEND", b"")
-          open("build/icon.png", "wb").write(png)
-          PY
+          import struct, zlib, wave, math
 
-      - name: Generate 3DS banner
-        run: |
-          python3 - <<'PY'
-          import struct, zlib
-          w, h = 256, 128
-          rows = []
-          for y in range(h):
-              row = bytearray([0])
-              for x in range(w):
-                  # Navy background with a cyan center panel.
-                  panel = 12 <= x < 244 and 12 <= y < 116
-                  edge = panel and (x < 16 or x >= 240 or y < 16 or y >= 112)
-                  if edge:
-                      row.extend((34, 211, 238, 255))
-                  elif panel:
-                      row.extend((8, 24, 48, 255))
-                  else:
-                      row.extend((4, 12, 30, 255))
-              rows.append(bytes(row))
-          def chunk(kind, data):
-              return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
-          png = b"\x89PNG\r\n\x1a\n"
-          png += chunk(b"IHDR", struct.pack(">2I5B", w, h, 8, 6, 0, 0, 0))
-          png += chunk(b"IDAT", zlib.compress(b"".join(rows), 9))
-          png += chunk(b"IEND", b"")
-          open("build/banner.png", "wb").write(png)
-          import wave, math
+          def png(path, w, h, painter):
+              pixels = [[(7, 15, 39, 255) for _ in range(w)] for _ in range(h)]
+              def put(x, y, color):
+                  if 0 <= x < w and 0 <= y < h:
+                      pixels[y][x] = (*color, 255)
+              def rect(x, y, rw, rh, color):
+                  for yy in range(y, y + rh):
+                      for xx in range(x, x + rw):
+                          put(xx, yy, color)
+              def circle(cx, cy, radius, color):
+                  rr = radius * radius
+                  for yy in range(cy - radius, cy + radius + 1):
+                      for xx in range(cx - radius, cx + radius + 1):
+                          if (xx-cx)**2 + (yy-cy)**2 <= rr:
+                              put(xx, yy, color)
+              for y in range(h):
+                  for x in range(w):
+                      t = x / max(1, w - 1)
+                      put(x, y, (int(7 + 15*t), int(16 + 18*t), int(42 + 38*t)))
+              painter(put, rect, circle, w, h)
+              rows = []
+              for row in pixels:
+                  raw = bytearray([0])
+                  for px in row:
+                      raw.extend(px)
+                  rows.append(bytes(raw))
+              def chunk(kind, data):
+                  return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
+              data = b"\x89PNG\r\n\x1a\n"
+              data += chunk(b"IHDR", struct.pack(">2I5B", w, h, 8, 6, 0, 0, 0))
+              data += chunk(b"IDAT", zlib.compress(b"".join(rows), 9))
+              data += chunk(b"IEND", b"")
+              open(path, "wb").write(data)
+
+          def icon_art(put, rect, circle, w, h):
+              circle(24, 24, 22, (34, 48, 74))
+              circle(24, 23, 19, (248, 250, 255))
+              for y in range(5, 24):
+                  for x in range(5, 44):
+                      if (x-24)**2 + (y-23)**2 <= 19**2:
+                          put(x, y, (239, 67, 84))
+              rect(6, 21, 36, 5, (20, 29, 48))
+              circle(24, 23, 8, (255, 255, 255))
+              circle(24, 23, 4, (43, 63, 91))
+              circle(17, 13, 3, (255, 175, 177))
+
+          def banner_art(put, rect, circle, w, h):
+              for i in range(5):
+                  circle(20 + i*16, 18 + (i%2)*88, 2+i%2, (45, 120+i*12, 166+i*8))
+              rect(12, 12, 232, 3, (43, 192, 220))
+              rect(12, 113, 232, 3, (43, 116, 166))
+              circle(203, 65, 48, (20, 31, 53))
+              circle(203, 64, 43, (247, 249, 255))
+              for y in range(22, 65):
+                  for x in range(160, 247):
+                      if (x-203)**2 + (y-64)**2 <= 43**2:
+                          put(x, y, (239, 67, 84))
+              rect(161, 61, 84, 7, (20, 29, 48))
+              circle(203, 64, 16, (255, 255, 255))
+              circle(203, 64, 9, (43, 63, 91))
+              circle(187, 43, 6, (255, 178, 180))
+
+          png("build/icon.png", 48, 48, icon_art)
+          png("build/banner.png", 256, 128, banner_art)
+
           with wave.open("build/banner.wav", "wb") as audio:
               audio.setnchannels(1)
               audio.setsampwidth(2)
@@ -134,8 +148,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v0.1.0
-          name: NSMBHD-Shop v0.1.0
-          body: First installable Nintendo 3DS homebrew build. More shop features will follow.
+          name: Pokemon Hub v0.1.0
+          body: First illustrated Pokemon Hub build for Nintendo 3DS.
           files: build/NSMBHD-Shop.cia
           fail_on_unmatched_files: true
           overwrite_files: true

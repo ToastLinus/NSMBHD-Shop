@@ -129,10 +129,13 @@ jobs:
           path: build/NSMBHD-Shop.cia
           if-no-files-found: error
 
-      - name: Publish latest CIA asset
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Publish latest CIA release
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v0.1.0
+          name: NSMBHD-Shop v0.1.0
+          body: First installable Nintendo 3DS homebrew build. More shop features will follow.
           files: build/NSMBHD-Shop.cia
           fail_on_unmatched_files: true
           overwrite_files: true

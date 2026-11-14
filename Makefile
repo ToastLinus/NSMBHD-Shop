@@ -5,8 +5,8 @@ SOURCES     := source
 DATA        :=
 INCLUDES    := include
 
-APP_TITLE       := NSMBHD Shop
-APP_DESCRIPTION := New Super Mario Bros. community mod browser
+APP_TITLE       := Pokemon Hub
+APP_DESCRIPTION := Pokemon game library and discovery hub
 APP_AUTHOR      := ToastLinus
 APP_VERSION     := 1.0.0
 
@@ -36,8 +36,6 @@ VPATH  := $(ROOT)/$(SOURCES)
 .PHONY: all clean
 all: $(TARGET).cia
 
-# The 3DS specs request this startup object by its short filename.
-# The devkitARM Docker image stores it in the ARMv6K/FPU subdirectory.
 3dsx_crt0.o:
 	ln -sf $(DEVKITARM)/arm-none-eabi/lib/armv6k/fpu/3dsx_crt0.o $@
 

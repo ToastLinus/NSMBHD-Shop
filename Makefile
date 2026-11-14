@@ -10,10 +10,10 @@ APP_DESCRIPTION := New Super Mario Bros. community mod browser
 APP_AUTHOR      := ToastLinus
 APP_VERSION     := 1.0.0
 
-CFLAGS   := -g -Wall -O2 -mword-relocations -ffunction-sections -fdata-sections
+CFLAGS   := -g -Wall -O2 -march=armv6k -mtune=mpcore -mfloat-abi=hard -mfpu=vfp -mword-relocations -ffunction-sections -fdata-sections
 CFLAGS   += -D__3DS__ -I$(DEVKITPRO)/libctru/include
 CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
-LDFLAGS  := -specs=3dsx.specs -g -Wl,--gc-sections
+LDFLAGS  := -specs=3dsx.specs -march=armv6k -mtune=mpcore -mfloat-abi=hard -mfpu=vfp -g -Wl,--gc-sections
 LIBS     := -lctru
 LIBDIRS  := $(DEVKITPRO)/libctru/lib
 

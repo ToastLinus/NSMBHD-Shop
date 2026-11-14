@@ -103,6 +103,17 @@ jobs:
           png += chunk(b"IDAT", zlib.compress(b"".join(rows), 9))
           png += chunk(b"IEND", b"")
           open("build/banner.png", "wb").write(png)
+          import wave, math
+          with wave.open("build/banner.wav", "wb") as audio:
+              audio.setnchannels(1)
+              audio.setsampwidth(2)
+              audio.setframerate(22050)
+              samples = bytearray()
+              for n in range(22050):
+                  envelope = min(1.0, n / 500, (22050 - n) / 3000)
+                  value = int(900 * envelope * math.sin(2 * math.pi * 660 * n / 22050))
+                  samples.extend(struct.pack("<h", value))
+              audio.writeframes(samples)
           PY
 
       - name: Build CIA

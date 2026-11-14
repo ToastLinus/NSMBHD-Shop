@@ -223,13 +223,13 @@ static void draw_bottom(void) {
         printf("\x1b[36m  PROJECT SUMMARY\x1b[0m\n\n");
         printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
         printf("\x1b[90m  This entry is a directory listing,\n  not a hosted game download.\n\n");
-        printf("\x1b[33m  DOWNLOADS\x1b[0m\n");
-        printf("\x1b[37m  Open the source page shown above\n  to check the creator's current files.\n\n");
+        printf("\x1b[33m  PROJECT ACTIONS\x1b[0m\n");
+        printf("\x1b[36m  Y  Open official project page\x1b[0m\n");
         if (p->redistribution_authorized && p->download_url[0])
-            printf("\x1b[36m  X  Download approved file\x1b[0m\n");
+            printf("\x1b[36m  X  Download approved patch\x1b[0m\n");
         else
-            printf("\x1b[90m  No approved download file yet\x1b[0m\n");
-        printf("\x1b[36m  B\x1b[0m  Back to project list\n");
+            printf("\x1b[90m  No direct patch download\x1b[0m\n");
+        printf("\x1b[36m  B  Back to project list\x1b[0m\n");
     }
     printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
     printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");

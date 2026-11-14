@@ -27,7 +27,7 @@ clean:
 	@rm -rf $(BUILD)
 else
 ROOT := $(abspath ..)
-include $(DEVKITPRO)/libctru/3ds_rules
+include $(DEVKITARM)/3ds_rules
 
 CFILES := $(notdir $(wildcard $(ROOT)/$(SOURCES)/*.c))
 OFILES := $(CFILES:.c=.o)

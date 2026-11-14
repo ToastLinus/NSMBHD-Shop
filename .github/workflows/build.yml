@@ -32,9 +32,10 @@ jobs:
       - name: Install CIA packaging tools
         run: |
           mkdir -p /tmp/3ds-tools
-          curl -fL "https://github.com/carstene1ns/3ds-bannertool/releases/download/1.2.2/bannertool-1.2.2-linux.zip" -o /tmp/3ds-tools/bannertool.zip
-          unzip -q /tmp/3ds-tools/bannertool.zip -d /tmp/3ds-tools/bannertool
-          find /tmp/3ds-tools/bannertool -type f -name bannertool -exec install -m 755 {} /usr/local/bin/bannertool \;
+          git clone --depth 1 https://github.com/carstene1ns/3ds-bannertool.git /tmp/3ds-tools/bannertool-src
+          cmake -S /tmp/3ds-tools/bannertool-src -B /tmp/3ds-tools/bannertool-build -DCMAKE_BUILD_TYPE=Release
+          cmake --build /tmp/3ds-tools/bannertool-build --parallel 2
+          install -m 755 /tmp/3ds-tools/bannertool-build/bannertool /usr/local/bin/bannertool
           curl -fL "https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.19.0/makerom-v0.19.0-ubuntu_x86_64.zip" -o /tmp/3ds-tools/makerom.zip
           unzip -q /tmp/3ds-tools/makerom.zip -d /tmp/3ds-tools/makerom
           find /tmp/3ds-tools/makerom -type f -name makerom -exec install -m 755 {} /usr/local/bin/makerom \;

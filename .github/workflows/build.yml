@@ -44,6 +44,9 @@ jobs:
           test -x /usr/local/bin/bannertool
           test -x /usr/local/bin/makerom
 
+      - name: Clean previous build
+        run: make clean
+
       - name: Generate 3DS icon
         run: |
           mkdir -p build
@@ -75,7 +78,7 @@ jobs:
           PY
 
       - name: Build CIA
-        run: make clean && make
+        run: make
 
       - name: Verify output
         run: test -s build/NSMBHD-Shop.cia

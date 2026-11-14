@@ -211,61 +211,56 @@ static void draw_top(void) {
 
 static void draw_bottom(void) {
     consoleSelect(&bottom);
-    printf("\x1b[2J\x1b[H");
-    printf("\x1b[44;37m                                                  \x1b[0m\n");
-    printf("\x1b[44;37m   NSMBHD SHOP  /  QUICK VIEW                     \x1b[0m\n");
-    printf("\x1b[44;37m                                                  \x1b[0m\n\n");
+    printf("\\x1b[2J\\x1b[H");
+    printf("\\x1b[44;37m                                                  \\x1b[0m\\n");
+    printf("\\x1b[44;37m   NSMBHD SHOP  /  QUICK VIEW                     \\x1b[0m\\n");
+    printf("\\x1b[44;37m                                                  \\x1b[0m\\n\\n");
 
     if (view == 0) {
-        printf("\x1b[36m  %s\x1b[0m\n\n", categories[category]);
+        printf("\\x1b[36m  %s\\x1b[0m\\n\\n", categories[category]);
         if (category == 0)
-            printf("\x1b[37m  Browse all projects in one list.\x1b[0m\n");
+            printf("\\x1b[37m  Only directly downloadable games appear.\\x1b[0m\\n");
         else if (category == 1)
-            printf("\x1b[37m  New Super Mario Bros. DS hacks\n  and community projects.\x1b[0m\n");
+            printf("\\x1b[37m  Directly downloadable DS games.\\x1b[0m\\n");
         else if (category == 2)
-            printf("\x1b[37m  New Super Mario Bros. 2 projects\n  for Nintendo 3DS.\x1b[0m\n");
+            printf("\\x1b[37m  Directly downloadable 3DS games.\\x1b[0m\\n");
         else if (category == 3)
-            printf("\x1b[37m  Project versions and new releases\n  will be highlighted here.\x1b[0m\n");
+            printf("\\x1b[37m  New direct-download releases.\\x1b[0m\\n");
         else
-            printf("\x1b[37m  Fan-made project directory.\n  Only approved CIA, 3DSX or NDS files belong here.\x1b[0m\n");
-        printf("\n\x1b[36m  A\x1b[0m  Open section\n");
-        printf("\x1b[36m  UP / DOWN\x1b[0m  Navigate\n");
+            printf("\\x1b[37m  Only creator-approved standalone files.\\x1b[0m\\n");
+        printf("\\n\\x1b[36m  A\\x1b[0m  Open section\\n");
+        printf("\\x1b[36m  UP / DOWN\\x1b[0m  Navigate\\n");
     } else if (view == 1) {
         int selected = project_at(project_index);
         if (selected < 0) {
-            printf("\x1b[33m  No verified direct downloads yet.\x1b[0m\n");
+            printf("\\x1b[33m  Noch keine geprüften Direktdownloads.\\x1b[0m\\n");
+            printf("\\x1b[90m  Einträge erscheinen erst mit einer\\n  freigegebenen CIA-, 3DSX- oder NDS-Datei.\\x1b[0m\\n");
         } else {
-        const Project *p = &projects[selected];
-        printf("\x1b[36m  %s\x1b[0m\n\n", p->title);
-        printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
-        printf("\x1b[90m  Developer: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
-        printf("\x1b[36m  A\x1b[0m  View details\n");
-        printf("\x1b[36m  B\x1b[0m  Back to sections\n");
-        } else {
-            printf("\x1b[33m  No directly downloadable games yet.\x1b[0m\n");
-            printf("\x1b[36m  B\x1b[0m  Back to sections\n");
+            const Project *p = &projects[selected];
+            printf("\\x1b[36m  %s\\x1b[0m\\n\\n", p->title);
+            printf("\\x1b[37m  %s\\x1b[0m\\n\\n", p->description);
+            printf("\\x1b[90m  Developer: %s\\n  Status: %s\\x1b[0m\\n\\n", p->creator, p->status);
+            printf("\\x1b[36m  A\\x1b[0m  View details\\n");
         }
+        printf("\\x1b[36m  B\\x1b[0m  Back to sections\\n");
     } else {
         int selected = project_at(project_index);
         if (selected < 0) {
-            printf("\x1b[33m  Keine direkt ladbaren Spiele vorhanden.\x1b[0m\n");
-            printf("\x1b[90m  Nur geprüfte, freigegebene NDS/CIA/3DSX-Dateien erscheinen hier.\x1b[0m\n");
-            printf("\n  B: Zurück\n");
-            printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
-            printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
-            return;
+            printf("\\x1b[33m  Keine direkt ladbaren Spiele vorhanden.\\x1b[0m\\n");
+            printf("\\x1b[90m  Nur geprüfte, freigegebene NDS/CIA/3DSX-Dateien erscheinen hier.\\x1b[0m\\n");
+            printf("\\n\\x1b[36m  B\\x1b[0m  Zurück\\n");
+        } else {
+            const Project *p = &projects[selected];
+            printf("\\x1b[36m  PROJECT SUMMARY\\x1b[0m\\n\\n");
+            printf("\\x1b[37m  %s\\x1b[0m\\n\\n", p->description);
+            printf("\\x1b[33m  PROJECT ACTIONS\\x1b[0m\\n");
+            printf("\\x1b[36m  X  Download approved game file\\x1b[0m\\n");
+            printf("\\x1b[90m  Only standalone CIA, 3DSX or NDS files.\\x1b[0m\\n");
+            printf("\\x1b[36m  B  Back to project list\\x1b[0m\\n");
         }
-        const Project *p = &projects[selected];
-        printf("\x1b[36m  PROJECT SUMMARY\x1b[0m\n\n");
-        printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
-        printf("\x1b[90m  This entry is a directory listing,\n  not a hosted game download.\n\n");
-        printf("\x1b[33m  PROJECT ACTIONS\x1b[0m\n");
-        printf("\x1b[36m  X  Download approved game file\x1b[0m\n");
-        printf("\x1b[90m  Only standalone CIA, 3DSX or NDS files.\x1b[0m\n");
-        printf("\x1b[36m  B  Back to project list\x1b[0m\n");
     }
-    printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
-    printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
+    printf("\\n\\x1b[90m  %s\\x1b[0m\\n", download_status);
+    printf("\\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\\x1b[0m\\n");
 }
 
 static void draw_all(void) {

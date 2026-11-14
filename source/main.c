@@ -15,21 +15,21 @@ static const PokemonGame games[] = {
     {"HeartGold", "Nintendo DS", "Abenteuer", "2010", "Johto neu erleben: Reise durch Johto und Kanto.", 0},
     {"SoulSilver", "Nintendo DS", "Abenteuer", "2010", "Das Gegenstueck zu HeartGold mit eigener Legendenreise.", 0},
     {"Platin", "Nintendo DS", "Abenteuer", "2009", "Sinnoh mit der Zerrwelt und Giratina entdecken.", 0},
-    {"Schwarz", "Nintendo DS", "Abenteuer", "2011", "Eine neue Region und eine neue Pokédex-Reise.", 0},
+    {"Schwarz", "Nintendo DS", "Abenteuer", "2011", "Eine neue Region und eine neue Pokedex-Reise.", 0},
     {"Weiss", "Nintendo DS", "Abenteuer", "2011", "Die Einall-Region aus einer anderen Perspektive.", 0},
     {"Schwarz 2", "Nintendo DS", "Abenteuer", "2012", "Zwei Jahre spaeter geht das Einall-Abenteuer weiter.", 0},
     {"Weiss 2", "Nintendo DS", "Abenteuer", "2012", "Eine zweite Reise durch Einall mit neuen Orten.", 0},
     {"X", "Nintendo 3DS", "Abenteuer", "2013", "Kalos, Mega-Entwicklung und der 3D-Einstieg.", 1},
-    {"Y", "Nintendo 3DS", "Abenteuer", "2013", "Erkunde Kalos und entdecke seltene Pokémon.", 1},
+    {"Y", "Nintendo 3DS", "Abenteuer", "2013", "Erkunde Kalos und entdecke seltene Pokemon.", 1},
     {"Omega Rubin", "Nintendo 3DS", "Abenteuer", "2014", "Hoenn-Remake mit neuen Mega-Entwicklungen.", 1},
     {"Alpha Saphir", "Nintendo 3DS", "Abenteuer", "2014", "Hoenn aus einer zweiten Perspektive erleben.", 1},
     {"Sonne", "Nintendo 3DS", "Abenteuer", "2016", "Inselwanderschaft in der Alola-Region.", 1},
     {"Mond", "Nintendo 3DS", "Abenteuer", "2016", "Alola mit einer besonderen Tageszeit-Umkehr.", 1},
     {"Ultrasonne", "Nintendo 3DS", "Abenteuer", "2017", "Eine erweiterte Reise durch Alola.", 1},
     {"Ultramond", "Nintendo 3DS", "Abenteuer", "2017", "Neue Abenteuer und Geheimnisse in Alola.", 1},
-    {"Mystery Dungeon: Erkundungsteam Himmel", "Nintendo DS", "Spin-off", "2009", "Ein Dungeon-Abenteuer, in dem du selbst Pokémon bist.", 2},
-    {"Pokémon Ranger: Finsternis über Almia", "Nintendo DS", "Spin-off", "2008", "Als Ranger Pokémon beschützen und Missionen lösen.", 2},
-    {"Super Mystery Dungeon", "Nintendo 3DS", "Spin-off", "2016", "Ein grosses Mystery-Dungeon-Abenteuer mit vielen Pokémon.", 2}
+    {"Mystery Dungeon: Erkundungsteam Himmel", "Nintendo DS", "Spin-off", "2009", "Ein Dungeon-Abenteuer, in dem du selbst Pokemon bist.", 2},
+    {"Pokemon Ranger: Finsternis über Almia", "Nintendo DS", "Spin-off", "2008", "Als Ranger Pokemon beschützen und Missionen lösen.", 2},
+    {"Super Mystery Dungeon", "Nintendo 3DS", "Spin-off", "2016", "Ein grosses Mystery-Dungeon-Abenteuer mit vielen Pokemon.", 2}
 };
 #define GAME_COUNT ((int)(sizeof(games) / sizeof(games[0])))
 #define CATEGORY_COUNT 6
@@ -105,16 +105,18 @@ static void circle(u8 *fb, int height, int cx, int cy, int radius,
 static void draw_orb(u8 *fb, int height, int cx, int cy, int radius) {
     circle(fb, height, cx + 3, cy + 5, radius + 2, 4, 7, 18);
     circle(fb, height, cx, cy, radius, 24, 31, 54);
-    for (int y = cy - radius + 3; y < cy; ++y) {
-        int dy = y - cy;
-        int half = (int)sqrtf((float)(radius * radius - dy * dy));
-        fill_rect(fb, height, cx - half, y, half * 2, 1, 235, 66, 83);
-    }
-    for (int y = cy; y < cy + radius - 2; ++y) {
-        int dy = y - cy;
-        int half = (int)sqrtf((float)(radius * radius - dy * dy));
-        fill_rect(fb, height, cx - half, y, half * 2, 1, 238, 244, 250);
-    }
+    for (int y = cy - radius + 3; y < cy; ++y)
+        for (int x = cx - radius; x <= cx + radius; ++x) {
+            int dx = x - cx, dy = y - cy;
+            if (dx * dx + dy * dy <= radius * radius)
+                pixel(fb, x, y, height, 235, 66, 83);
+        }
+    for (int y = cy; y < cy + radius - 2; ++y)
+        for (int x = cx - radius; x <= cx + radius; ++x) {
+            int dx = x - cx, dy = y - cy;
+            if (dx * dx + dy * dy <= radius * radius)
+                pixel(fb, x, y, height, 238, 244, 250);
+        }
     fill_rect(fb, height, cx - radius + 1, cy - 4, radius * 2 - 2, 8, 18, 25, 43);
     circle(fb, height, cx, cy, radius / 3, 245, 248, 252);
     circle(fb, height, cx, cy, radius / 5, 38, 53, 75);
@@ -219,6 +221,8 @@ static void draw_top(void) {
     }
 }
 
+static int visible_favourite_count(void);
+
 static void draw_bottom(void) {
     consoleSelect(&bottom);
     printf("\x1b[1;1H");
@@ -291,7 +295,7 @@ int main(void) {
             if (down & KEY_DOWN) { category = (category + 1) % CATEGORY_COUNT; changed = true; }
             if (down & KEY_A) {
                 if (category == 5) {
-                    snprintf(status_line, sizeof(status_line), "Pokémon Hub - Bibliothek und Entdecker");
+                    snprintf(status_line, sizeof(status_line), "Pokemon Hub - Bibliothek und Entdecker");
                 } else {
                     view = 1;
                     game_index = 0;

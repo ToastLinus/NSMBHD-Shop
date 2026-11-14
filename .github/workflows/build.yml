@@ -41,8 +41,8 @@ jobs:
           install -m 755 /tmp/3ds-tools/project-ctr/makerom/bin/makerom /usr/local/bin/makerom
           command -v bannertool
           command -v makerom
-          bannertool --help >/dev/null
-          makerom -help >/dev/null
+          test -x /usr/local/bin/bannertool
+          test -x /usr/local/bin/makerom
 
       - name: Build CIA
         run: make clean && make

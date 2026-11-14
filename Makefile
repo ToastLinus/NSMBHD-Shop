@@ -36,8 +36,13 @@ VPATH  := $(ROOT)/$(SOURCES)
 .PHONY: all clean
 all: $(TARGET).cia
 
-$(TARGET).elf: $(OFILES)
-	$(CC) $(LDFLAGS) -L$(DEVKITPRO)/libctru/lib -L$(DEVKITPRO)/devkitARM/arm-none-eabi/lib -L$(DEVKITPRO)/devkitARM/arm-none-eabi/lib/armv6k/fpu $^ $(LIBS) -o $@
+# The 3DS specs request this startup object by its short filename.
+# The devkitARM Docker image stores it in the ARMv6K/FPU subdirectory.
+3dsx_crt0.o:
+	ln -sf $(DEVKITARM)/arm-none-eabi/lib/armv6k/fpu/3dsx_crt0.o $@
+
+$(TARGET).elf: $(OFILES) 3dsx_crt0.o
+	$(CC) $(LDFLAGS) -L$(DEVKITPRO)/libctru/lib -L$(DEVKITPRO)/devkitARM/arm-none-eabi/lib $^ $(LIBS) -o $@
 
 $(TARGET).smdh:
 	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -o $@

@@ -17,19 +17,42 @@ typedef struct {
 } Project;
 
 static const Project projects[] = {
-    {"Newer Super Mario Bros. DS", "Newer Team", "Latest listed", "Finished", "A full New Super Mario Bros. DS community hack with new levels, graphics, enemies and more.", "https://newerteam.com/ds/", 0, "", "", 0},
-    {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "A community-made New Super Mario Bros. DS hack. Check the project page for current files and notes.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
-    {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "A Luigi-focused DS hack listed in the NSMBHD project index.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
-    {"New Super Mario Bros. U DS", "Skylander", "1.10", "Demo", "Project listing. No directly playable CIA, 3DSX or NDS file is verified for the shop yet.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/", 0, "", "", 0},
-    {"Kaizo Inspired Mario", "frjd", "Latest listed", "Cancelled (2 levels)", "A Kaizo-inspired New Super Mario Bros. DS project; the community list marks it cancelled after two levels.", "https://jul.rustedlogic.net/thread.php?id=9237", 0, "", "", 0},
-    {"New Super Kazio Bros.", "Joe", "Beta", "Cancelled (W1 + 11 levels)", "A difficult New Super Mario Bros. DS project listed as a beta; the community index marks it cancelled.", "https://nsmbhd.net/thread/4177-new-super-kaizo-bros/", 0, "", "", 0},
-    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest listed", "Finished", "A full New Super Mario Bros. 2 project for Nintendo 3DS.", "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB2%29/", 1, "", "", 0},
-    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "A New Super Mario Bros. 2 community project for Nintendo 3DS.", "https://nsmbhd.net/thread/5551-more-super-mario-bros-3ds-demo/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "A New Super Mario Bros. 2 hack with a first-world demo listed by the community wiki.", "https://nsmbhd.net/thread/5182-new-super-mario-bros-2-anew-demo-v-1-2/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest listed", "Demo", "A challenge-focused NSMB2 project with a demo listing.", "https://nsmbhd.net/thread/5560-nsmb2-mastermode-demo/", 1, "", "", 0},
-    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest listed", "Demo", "A community project with a four-level demo listing.", "https://kuribo64.net/board/thread.php?id=3552", 1, "", "", 0},
-    {"Super Mario Bros. Next: Sunset Shores", "SMBNext Team", "Released mod", "Finished", "A New Super Mario Bros. 2 modification. Requires your own copy of NSMB2; it is not a standalone CIA, 3DSX or NDS game.", "https://smbnext.net/sunsetshores", 1, "", "", 0},
-    {"Super Mario Bros. Next: The Lost Levels", "SMBNext Team", "Parts 1 and 2", "Released mod", "A collection of additional NSMB2 stages. Requires your own copy of NSMB2 and game patching; it is not a standalone CIA, 3DSX or NDS game.", "https://smbnext.net/lostlevels", 1, "", "", 0}
+    {"Newer Super Mario Bros. DS", "Newer Team", "1.19", "Finished", "80 neue Level in 8 Welten. Der offizielle Download liefert einen Patch; du brauchst dein eigenes NSMB-DS-Spiel.", "https://newerteam.com/ds/", 0, "", "", 0},
+    {"New Super Mario Bros. Origins", "SKJmin", "1.0a rev2", "Finished", "Vollständiger NSMB-DS-Hack. Download-Link in der offiziellen Community-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Luigi Bros. Atlantis Revolution 2.5", "Luigui3060", "2.5", "Finished", "Vollständiger Luigi-Hack für NSMB DS. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Advance + Take 2", "MarioFanatic64", "1.2", "Finished", "Vollständiger DS-Hack mit eigenem Levelinhalt. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Bros.: Second Quest", "Zarxrax", "v8", "Finished", "Vollständiger NSMB-DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Bros. Nueva Generacion", "Luigui3060", "Latest", "Finished", "Vollständiger NSMB-DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Toad DS", "alpha", "Beta 2", "Demo", "Demo mit mehreren Welten. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Newer Summer Sun DS", "JonteFan05", "Latest", "Demo", "Mehrere spielbare Welten; Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Newer Super Mario Bros. GT", "Luigui3060", "rev3", "Finished", "Vollständiger NSMB-DS-Hack laut Projektliste. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Newest Super Mario Bros. DS Deluxe Plus", "Newest Atlantis Team DS", "1.02", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Newest Super Mario Bros. DS Deluxe", "Newest Atlantis Team DS", "1.06", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Newest Super Mario Bros. DS", "Newest Team", "1.01", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New-ish Super Mario Bros. DS", "Skylander", "2020", "Finished", "80-Level-NSMB-DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Super Mario Endless Earth", "MarioFanatic64", "1.04", "Finished", "Vollständiger NSMB-DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Super Mario Run DS", "ConorDoesHacks", "2.0", "Finished", "Kleiner NSMB-DS-Hack mit einer Welt. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"Super Mario Bros. - The New Worlds", "Arceus", "3.0", "Finished", "Vollständiger DS-Hack laut Projektliste. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"More Super Mario Bras 2: Choose a Path", "pinet", "1.1d", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"More Super Mario Bras: Beginner's Edition", "pinet", "1.4c", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Bros. 5: Clone Tag Team", "MarioFanatic64", "1.3.1", "Finished", "Vollständiger DS-Hack. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Bros. 5: Clone Tag Team 2", "MarioFanatic64", "1.0.1", "Finished", "Fortsetzung mit eigenen Leveln. Download-Link in der Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB)/", 0, "", "", 0},
+    {"New Super Mario Bros. DS Co-op", "ShaneDoyle", "2.5", "Finished", "Koop-Patch mit allen Leveln. Benötigt eine eigene NSMB-DS-Kopie.", "https://github.com/ShaneDoyle/nsmb-coop/releases/tag/v2.5", 0, "", "", 0},
+    {"Mario Classic Adventure", "Supah Malleo", "Latest", "Demo", "NSMB2-Demo für Nintendo 3DS. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"More Super Mario Bros. 3DS", "KarlMaa", "Demo", "Demo", "NSMB2-Projekt für 3DS. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Anew!", "GreyMask", "1.2", "Demo", "NSMB2-Demo mit erster Welt. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Mastermode!!", "NZia", "Latest", "Demo", "Challenge-Demo für NSMB2. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Return to the Pumpkin Boneyard", "Sierra", "1.1", "Finished", "NSMB2-Mod mit einer vollständigen Welt. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 Take 2", "ThorgeLP", "Latest", "Demo", "NSMB2-Demo mit vier Leveln. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2 U: Gold Edition", "RaptorBR", "2.1", "Demo", "NSMB2-Demo. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Bros. 2.5: The Adventure Unfolds", "Imnotstaple", "Final Demo", "Demo", "NSMB2-Finaldemo. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"New Super Mario Redux", "TRS", "Latest", "Demo", "NSMB2-Demo. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"Newer Super Mario Bros. 2", "Aaron Mallie", "Latest", "Finished", "Vollständiger NSMB2-Mod laut Projektliste. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"Sunset Shores", "SMBNext Team", "Latest", "Finished", "NSMB2-Mod. Benötigt dein eigenes NSMB2-Spiel.", "https://smbnext.net/sunsetshores", 1, "", "", 0},
+    {"Super Mario Bros. 3DX", "Astroclimber26", "Latest", "Demo", "NSMB2-Demo mit mehreren Leveln. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"Super Mario Bros. Next: The Lost Levels", "SMBNext Team", "Parts 1 and 2", "Finished", "Zusätzliche NSMB2-Level. Benötigt dein eigenes NSMB2-Spiel.", "https://smbnext.net/lostlevels", 1, "", "", 0},
+    {"Super Mario Bros. Next Halloween Special DX", "SMBNext Team", "v7", "Finished", "NSMB2-Mod mit Halloween-Thema. Benötigt dein eigenes NSMB2-Spiel.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0},
+    {"Turbo Super Mario Bros. 2", "Turbø Pingouin", "Latest", "Finished", "NSMB2-Mod mit einer Welt. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
 #define CATEGORY_COUNT 5
@@ -39,7 +62,7 @@ static const char *categories[CATEGORY_COUNT] = {
 };
 
 
-static char download_status[128] = "Select a project and press X to download.";
+static char download_status[128] = "Projekt wählen und X für die Downloadseite drücken.";
 
 static void open_project_page(const Project *p) {
     if (!p->url || !p->url[0]) {
@@ -132,17 +155,14 @@ static int category = 0;
 static int project_index = 0;
 static int view = 0; /* 0 categories, 1 project list, 2 project details */
 
-static bool is_direct_download(const Project *p) {
-    bool allowed_type = strcmp(p->file_ext, "cia") == 0 ||
-                        strcmp(p->file_ext, "3dsx") == 0 ||
-                        strcmp(p->file_ext, "nds") == 0;
-    return p->redistribution_authorized && p->download_url[0] && allowed_type;
+static bool has_download_page(const Project *p) {
+    return p->url && p->url[0] != '\0';
 }
 
 static int visible_project_count(void) {
     int count = 0;
     for (int i = 0; i < (int)PROJECT_COUNT; i++) {
-        if (is_direct_download(&projects[i]) &&
+        if (has_download_page(&projects[i]) &&
             (category == 0 || projects[i].system == category - 1))
             count++;
     }
@@ -152,7 +172,7 @@ static int visible_project_count(void) {
 static int project_at(int visible_index) {
     int count = 0;
     for (int i = 0; i < (int)PROJECT_COUNT; i++) {
-        if (is_direct_download(&projects[i]) &&
+        if (has_download_page(&projects[i]) &&
             (category == 0 || projects[i].system == category - 1)) {
             if (count == visible_index) return i;
             count++;
@@ -180,9 +200,9 @@ static void draw_top(void) {
         printf("\x1b[90m  Choose a section with UP / DOWN.\x1b[0m\n");
     } else if (view == 1) {
         int count = visible_project_count();
-        printf("\x1b[37m  %s  \x1b[90m(%d direkt ladbare Spiele)\x1b[0m\n\n", categories[category], count);
+        printf("\x1b[37m  %s  \x1b[90m(%d Mario-Projekte)\x1b[0m\n\n", categories[category], count);
         if (count == 0)
-            printf("\x1b[33m  Noch keine geprüfte, freigegebene\n  CIA-, 3DSX- oder NDS-Datei vorhanden.\x1b[0m\n\n");
+            printf("\x1b[33m  Keine Projekte mit Downloadseite gefunden.\x1b[0m\n\n");
         for (int i = 0; i < count && i < 9; i++) {
             const Project *p = &projects[project_at(i)];
             if (i == project_index)
@@ -195,7 +215,7 @@ static void draw_top(void) {
     } else {
         int selected = project_at(project_index);
         if (selected < 0) {
-            printf("\x1b[33m  No verified direct downloads yet.\x1b[0m\n");
+            printf("\x1b[33m  No project download pages available.\x1b[0m\n");
             return;
         }
         const Project *p = &projects[selected];
@@ -204,63 +224,63 @@ static void draw_top(void) {
         printf("\x1b[90m  Developer: \x1b[37m%s\x1b[0m\n", p->creator);
         printf("\x1b[90m  Version:   \x1b[37m%s\x1b[0m\n", p->version);
         printf("\x1b[90m  Status:    \x1b[37m%s\x1b[0m\n\n", p->status);
-        printf("\x1b[90m  Source: NSMBHD community wiki\x1b[0m\n");
+        printf("\x1b[90m  Projekt- und Downloadseite:\x1b[0m\n");
         printf("\x1b[36m  %s\x1b[0m\n", p->url);
     }
 }
 
 static void draw_bottom(void) {
     consoleSelect(&bottom);
-    printf("\\x1b[2J\\x1b[H");
-    printf("\\x1b[44;37m                                                  \\x1b[0m\\n");
-    printf("\\x1b[44;37m   NSMBHD SHOP  /  QUICK VIEW                     \\x1b[0m\\n");
-    printf("\\x1b[44;37m                                                  \\x1b[0m\\n\\n");
+    printf("\x1b[2J\x1b[H");
+    printf("\x1b[44;37m                                                  \x1b[0m\n");
+    printf("\x1b[44;37m   NSMBHD SHOP  /  QUICK VIEW                     \x1b[0m\n");
+    printf("\x1b[44;37m                                                  \x1b[0m\n\n");
 
     if (view == 0) {
-        printf("\\x1b[36m  %s\\x1b[0m\\n\\n", categories[category]);
+        printf("\x1b[36m  %s\x1b[0m\n\n", categories[category]);
         if (category == 0)
-            printf("\\x1b[37m  Only directly downloadable games appear.\\x1b[0m\\n");
+            printf("\x1b[37m  Mario-Projekte mit Downloadseiten.\x1b[0m\n");
         else if (category == 1)
-            printf("\\x1b[37m  Directly downloadable DS games.\\x1b[0m\\n");
+            printf("\x1b[37m  2D-Mario-Projekte für Nintendo DS.\x1b[0m\n");
         else if (category == 2)
-            printf("\\x1b[37m  Directly downloadable 3DS games.\\x1b[0m\\n");
+            printf("\x1b[37m  NSMB2-Projekte für Nintendo 3DS.\x1b[0m\n");
         else if (category == 3)
-            printf("\\x1b[37m  New direct-download releases.\\x1b[0m\\n");
+            printf("\x1b[37m  Neuere Mario-Projekte.\x1b[0m\n");
         else
-            printf("\\x1b[37m  Only creator-approved standalone files.\\x1b[0m\\n");
-        printf("\\n\\x1b[36m  A\\x1b[0m  Open section\\n");
-        printf("\\x1b[36m  UP / DOWN\\x1b[0m  Navigate\\n");
+            printf("\x1b[37m  Downloadseiten der Projekt-Ersteller.\x1b[0m\n");
+        printf("\n\x1b[36m  A\x1b[0m  Open section\n");
+        printf("\x1b[36m  UP / DOWN\x1b[0m  Navigate\n");
     } else if (view == 1) {
         int selected = project_at(project_index);
         if (selected < 0) {
-            printf("\\x1b[33m  Noch keine geprüften Direktdownloads.\\x1b[0m\\n");
-            printf("\\x1b[90m  Einträge erscheinen erst mit einer\\n  freigegebenen CIA-, 3DSX- oder NDS-Datei.\\x1b[0m\\n");
+            printf("\x1b[33m  Keine Downloadseiten gefunden.\x1b[0m\n");
+            printf("\x1b[90m  Einträge erscheinen erst mit einer\n  freigegebenen CIA-, 3DSX- oder NDS-Datei.\x1b[0m\n");
         } else {
             const Project *p = &projects[selected];
-            printf("\\x1b[36m  %s\\x1b[0m\\n\\n", p->title);
-            printf("\\x1b[37m  %s\\x1b[0m\\n\\n", p->description);
-            printf("\\x1b[90m  Developer: %s\\n  Status: %s\\x1b[0m\\n\\n", p->creator, p->status);
-            printf("\\x1b[36m  A\\x1b[0m  View details\\n");
+            printf("\x1b[36m  %s\x1b[0m\n\n", p->title);
+            printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
+            printf("\x1b[90m  Developer: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
+            printf("\x1b[36m  A\x1b[0m  View details\n");
         }
-        printf("\\x1b[36m  B\\x1b[0m  Back to sections\\n");
+        printf("\x1b[36m  B\x1b[0m  Back to sections\n");
     } else {
         int selected = project_at(project_index);
         if (selected < 0) {
-            printf("\\x1b[33m  Keine direkt ladbaren Spiele vorhanden.\\x1b[0m\\n");
-            printf("\\x1b[90m  Nur geprüfte, freigegebene NDS/CIA/3DSX-Dateien erscheinen hier.\\x1b[0m\\n");
-            printf("\\n\\x1b[36m  B\\x1b[0m  Zurück\\n");
+            printf("\x1b[33m  Keine Projektseiten vorhanden.\x1b[0m\n");
+            printf("\x1b[90m  X öffnet die Projekt- und Downloadseite im Browser.\x1b[0m\n");
+            printf("\n\x1b[36m  B\x1b[0m  Zurück\n");
         } else {
             const Project *p = &projects[selected];
-            printf("\\x1b[36m  PROJECT SUMMARY\\x1b[0m\\n\\n");
-            printf("\\x1b[37m  %s\\x1b[0m\\n\\n", p->description);
-            printf("\\x1b[33m  PROJECT ACTIONS\\x1b[0m\\n");
-            printf("\\x1b[36m  X  Download approved game file\\x1b[0m\\n");
-            printf("\\x1b[90m  Only standalone CIA, 3DSX or NDS files.\\x1b[0m\\n");
-            printf("\\x1b[36m  B  Back to project list\\x1b[0m\\n");
+            printf("\x1b[36m  PROJECT SUMMARY\x1b[0m\n\n");
+            printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
+            printf("\x1b[33m  DOWNLOAD / PROJEKTSEITE\x1b[0m\n");
+            printf("\x1b[36m  X  Downloadseite im Browser öffnen\x1b[0m\n");
+            printf("\x1b[90m  Viele Fan-Projekte sind Patches und brauchen das Originalspiel.\x1b[0m\n");
+            printf("\x1b[36m  B  Back to project list\x1b[0m\n");
         }
     }
-    printf("\\n\\x1b[90m  %s\\x1b[0m\\n", download_status);
-    printf("\\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\\x1b[0m\\n");
+    printf("\n\x1b[90m  %s\x1b[0m\n", download_status);
+    printf("\x1b[90m  TOASTLINUS  |  COMMUNITY CATALOG\x1b[0m\n");
 }
 
 static void draw_all(void) {
@@ -300,7 +320,8 @@ int main(void) {
             if (down & KEY_B) { view = 0; changed = true; }
         } else {
             if ((down & KEY_X) && category <= 2) {
-                download_project(&projects[project_at(project_index)]);
+                int selected = project_at(project_index);
+                if (selected >= 0) open_project_page(&projects[selected]);
                 changed = true;
             }
 

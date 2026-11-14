@@ -16,11 +16,16 @@ jobs:
     container:
       image: devkitpro/devkitarm:latest
     steps:
+      - name: Install 3DS development libraries
+        run: |
+          dkp-pacman -Sy --noconfirm
+          dkp-pacman -S --noconfirm 3ds-dev
+
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build CIA
-        run: make
+        run: make clean && make
 
       - name: Verify output
         run: test -s build/NSMBHD-Shop.cia

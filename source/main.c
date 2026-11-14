@@ -55,10 +55,10 @@ static const Project projects[] = {
     {"Turbo Super Mario Bros. 2", "Turbø Pingouin", "Latest", "Finished", "NSMB2-Mod mit einer Welt. Download-Link in der NSMB2-Projektliste.", "https://nsmbhd.net/wiki/List_of_Hacks_(NSMB2)/", 1, "", "", 0}
 };
 #define PROJECT_COUNT (sizeof(projects) / sizeof(projects[0]))
-#define CATEGORY_COUNT 5
+#define CATEGORY_COUNT 4
 
 static const char *categories[CATEGORY_COUNT] = {
-    "Featured projects", "NSMB DS", "NSMB 2 (3DS)", "Latest updates", "About & safety"
+    "Alle Mario-Projekte", "NSMB DS", "NSMB 2 (3DS)", "Info & Hinweise"
 };
 
 
@@ -203,7 +203,9 @@ static void draw_top(void) {
         printf("\x1b[37m  %s  \x1b[90m(%d Mario-Projekte)\x1b[0m\n\n", categories[category], count);
         if (count == 0)
             printf("\x1b[33m  Keine Projekte mit Downloadseite gefunden.\x1b[0m\n\n");
-        for (int i = 0; i < count && i < 9; i++) {
+        int first = project_index > 8 ? project_index - 8 : 0;
+        int last = first + 9 < count ? first + 9 : count;
+        for (int i = first; i < last; i++) {
             const Project *p = &projects[project_at(i)];
             if (i == project_index)
                 printf("\x1b[46;30m  > %-43.43s\x1b[0m\n", p->title);
@@ -211,7 +213,7 @@ static void draw_top(void) {
                 printf("\x1b[37m    %-43.43s\x1b[0m\n", p->title);
             printf("\x1b[90m      %-43.43s\x1b[0m\n\n", p->creator);
         }
-        printf("\x1b[90m  A: project details   B: sections\x1b[0m\n");
+        printf("\x1b[90m  A: Details   B: Zurück\x1b[0m\n");
     } else {
         int selected = project_at(project_index);
         if (selected < 0) {
@@ -221,11 +223,12 @@ static void draw_top(void) {
         const Project *p = &projects[selected];
         printf("\x1b[36m  PROJECT DETAILS\x1b[0m\n\n");
         printf("\x1b[37m  %s\x1b[0m\n\n", p->title);
-        printf("\x1b[90m  Developer: \x1b[37m%s\x1b[0m\n", p->creator);
-        printf("\x1b[90m  Version:   \x1b[37m%s\x1b[0m\n", p->version);
-        printf("\x1b[90m  Status:    \x1b[37m%s\x1b[0m\n\n", p->status);
+        printf("\x1b[90m  Ersteller:  \x1b[37m%s\x1b[0m\n", p->creator);
+        printf("\x1b[90m  Version:    \x1b[37m%s\x1b[0m\n", p->version);
+        printf("\x1b[90m  Status:     \x1b[37m%s\x1b[0m\n\n", p->status);
         printf("\x1b[90m  Projekt- und Downloadseite:\x1b[0m\n");
         printf("\x1b[36m  %s\x1b[0m\n", p->url);
+        printf("\x1b[33m  X öffnet diese Seite im Browser.\x1b[0m\n");
     }
 }
 
@@ -254,20 +257,20 @@ static void draw_bottom(void) {
         int selected = project_at(project_index);
         if (selected < 0) {
             printf("\x1b[33m  Keine Downloadseiten gefunden.\x1b[0m\n");
-            printf("\x1b[90m  Einträge erscheinen erst mit einer\n  freigegebenen CIA-, 3DSX- oder NDS-Datei.\x1b[0m\n");
+            printf("\x1b[90m  Die Einträge führen zur Projekt-/Downloadseite.\x1b[0m\n");
         } else {
             const Project *p = &projects[selected];
             printf("\x1b[36m  %s\x1b[0m\n\n", p->title);
             printf("\x1b[37m  %s\x1b[0m\n\n", p->description);
             printf("\x1b[90m  Developer: %s\n  Status: %s\x1b[0m\n\n", p->creator, p->status);
-            printf("\x1b[36m  A\x1b[0m  View details\n");
+            printf("\x1b[36m  A\x1b[0m  Details anzeigen\n");
         }
-        printf("\x1b[36m  B\x1b[0m  Back to sections\n");
+        printf("\x1b[36m  B\x1b[0m  Zurück zur Auswahl\n");
     } else {
         int selected = project_at(project_index);
         if (selected < 0) {
             printf("\x1b[33m  Keine Projektseiten vorhanden.\x1b[0m\n");
-            printf("\x1b[90m  X öffnet die Projekt- und Downloadseite im Browser.\x1b[0m\n");
+            printf("\x1b[90m  X öffnet die Projektseite im Browser.\x1b[0m\n");
             printf("\n\x1b[36m  B\x1b[0m  Zurück\n");
         } else {
             const Project *p = &projects[selected];
@@ -276,7 +279,7 @@ static void draw_bottom(void) {
             printf("\x1b[33m  DOWNLOAD / PROJEKTSEITE\x1b[0m\n");
             printf("\x1b[36m  X  Downloadseite im Browser öffnen\x1b[0m\n");
             printf("\x1b[90m  Viele Fan-Projekte sind Patches und brauchen das Originalspiel.\x1b[0m\n");
-            printf("\x1b[36m  B  Back to project list\x1b[0m\n");
+            printf("\x1b[36m  B  Zurück zur Spieleliste\x1b[0m\n");
         }
     }
     printf("\n\x1b[90m  %s\x1b[0m\n", download_status);

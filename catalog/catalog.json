@@ -48,11 +48,11 @@
       "creator": "Skylander",
       "version": "1.08 listed",
       "status": "Finished",
-      "description": "Creator-uploaded xdelta patch; not a playable NDS file. Requires a compatible clean game dump you own and a patching tool.",
+      "description": "Project listing only. No directly playable CIA, 3DSX or NDS file is verified for the shop yet.",
       "project_url": "https://nsmbhd.net/wiki/List_of_Hacks_%28NSMB%29/",
-      "download_url": "https://nsmbhd.net/file/LOIgZSRJuTiyZtN4/Nsmbudsv1.10.xdelta",
-      "download_type": "xdelta-patch",
-      "redistribution_authorized": true
+      "download_url": "",
+      "download_type": "project-page",
+      "redistribution_authorized": false
     },
     {
       "id": "newer-smb-2",

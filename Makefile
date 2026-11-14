@@ -1,58 +1,53 @@
-# Native Nintendo 3DS homebrew build
-.SUFFIXES:
-include $(DEVKITARM)/3ds_rules
-
+# Nintendo 3DS homebrew build
 TARGET      := NSMBHD-Shop
 BUILD       := build
 SOURCES     := source
-DATA        := data
+DATA        :=
 INCLUDES    := include
-GRAPHICS    :=
 
 APP_TITLE       := NSMBHD Shop
 APP_DESCRIPTION := New Super Mario Bros. community mod browser
 APP_AUTHOR      := ToastLinus
-APP_VERSION    := 1.0.0
+APP_VERSION     := 1.0.0
 
-CFLAGS      := -g -Wall -O2 -mword-relocations -ffunction-sections \
-               -D__3DS__
-CFLAGS      += $(INCLUDE) -I$(DEVKITPRO)/libctru/include
-CXXFLAGS    := $(CFLAGS) -fno-rtti -fno-exceptions
-ASFLAGS     := -g
-LDFLAGS     := -specs=3dsx.specs -g -Wl,-Map,$(notdir $*.map)
-
-LIBS        := -lctru
-LIBDIRS     := $(LIBCTRU)
+CFLAGS   := -g -Wall -O2 -mword-relocations -ffunction-sections -fdata-sections
+CFLAGS   += -D__3DS__ -I$(DEVKITPRO)/libctru/include
+CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
+LDFLAGS  := -specs=3dsx.specs -g -Wl,--gc-sections
+LIBS     := -lctru
+LIBDIRS  := $(DEVKITPRO)/libctru
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
-.PHONY: all
+.PHONY: all clean
 all:
 	@mkdir -p $(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+
+clean:
+	@rm -rf $(BUILD)
 else
-.PHONY: all
+ROOT := $(abspath ..)
+include $(DEVKITPRO)/libctru/3ds_rules
+
+CFILES := $(notdir $(wildcard $(ROOT)/$(SOURCES)/*.c))
+OFILES := $(CFILES:.c=.o)
+VPATH  := $(ROOT)/$(SOURCES)
+
+.PHONY: all clean
 all: $(TARGET).cia
-
-CFILES      := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
-OFILES      := $(CFILES:.c=.o)
-VPATH       := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).elf: $(OFILES)
 	$(CC) $(LDFLAGS) $^ $(LIBS) -o $@
 
-$(TARGET).3dsx: $(TARGET).elf
-	3dsxtool $< $@ --smdh=$(TARGET).smdh
-
 $(TARGET).smdh:
-	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(CURDIR)/icon.png -o $@
+	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -o $@
 
-$(TARGET).cia: $(TARGET).elf $(TARGET).smdh
-	 makerom -f cia -o $(TARGET).cia -elf $(TARGET).elf -rsf $(DEVKITPRO)/tools/3dslink/3dslink.rsf -icon $(TARGET).smdh -banner $(DEVKITPRO)/tools/3dslink/banner.bnr
+$(TARGET).bnr:
+	bannertool makebanner -i $(DEVKITPRO)/tools/3dslink/banner.png -o $@
 
-.PHONY: clean
+$(TARGET).cia: $(TARGET).elf $(TARGET).smdh $(TARGET).bnr
+	makerom -f cia -o $@ -elf $(TARGET).elf -icon $(TARGET).smdh -banner $(TARGET).bnr
+
 clean:
-	rm -f *.o *.elf *.3dsx *.cia *.smdh
+	@rm -f *.o *.elf *.3dsx *.cia *.smdh *.bnr
 endif

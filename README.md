@@ -1,20 +1,14 @@
 # NSMBHD Shop
 
-A native Nintendo 3DS homebrew directory for New Super Mario Bros. DS and New Super Mario Bros. 2 community projects.
+A Nintendo 3DS catalog for directly downloadable New Super Mario Bros. community games.
 
-## Current app
-- Featured project directory
-- Separate Nintendo DS and Nintendo 3DS project categories
-- Project detail pages with creator, listed version/status, description and source page
-- Project entries link to creator/community pages for current release information
+## Strict download rule
 
-## Important: project mods are not standalone games
-Most NSMBHD entries are modifications of commercial Nintendo games. They generally require the original game owned by the player and a compatible patching method. They are not independent CIA, 3DSX or NDS games. For example, the Newer DS site provides a ROM patcher, while Super Mario Bros. Next explicitly requires an existing copy of New Super Mario Bros. 2.
+The shop lists a project only when all of the following are verified:
+- A standalone `.nds`, `.cia`, or `.3dsx` file is available.
+- The direct download URL is configured.
+- Redistribution is explicitly authorized by the creator or rights holder.
 
-The shop only enables its in-app download action for a directly playable CIA, 3DSX or NDS file when redistribution is authorized. It does not host or bundle Nintendo game data, ROMs, or third-party archives. A project page link is not presented as a direct game download.
+Patch-only projects, project pages, archives, and files that require an original commercial game are not shown as downloadable games. No Nintendo game ROMs or copyrighted game data are hosted or redistributed.
 
-## Catalog
-Edit `catalog/catalog.json`. Keep project pages and status current. Do not add ROMs, Nintendo game data, or unauthorized full game copies.
-
-## Build
-Push to `main` or run the **Build 3DS CIA** workflow manually. The workflow builds `NSMBHD-Shop.cia`.
+At present, no project in the catalog has met all three requirements, so the game list is intentionally empty rather than showing misleading download buttons.

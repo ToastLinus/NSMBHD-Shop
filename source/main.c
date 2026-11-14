@@ -1,7 +1,6 @@
 #include <3ds.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/stat.h>
 
 typedef struct {
     const char *title;
@@ -81,75 +80,6 @@ static void open_project_page(const Project *p) {
     snprintf(download_status, sizeof(download_status), "Returned from project page.");
 }
 
-static bool download_project(const Project *p) {
-    /* Only directly playable/homebrew package formats are allowed in this shop. */
-    bool allowed_type = strcmp(p->file_ext, "cia") == 0 ||
-                        strcmp(p->file_ext, "3dsx") == 0 ||
-                        strcmp(p->file_ext, "nds") == 0;
-    if (!p->redistribution_authorized || !p->download_url[0] || !allowed_type) {
-        snprintf(download_status, sizeof(download_status), "No creator-approved file is configured yet.");
-        return false;
-    }
-
-    mkdir("sdmc:/3ds", 0777);
-    mkdir("sdmc:/3ds/NSMBHD-Shop", 0777);
-    char path[160];
-    snprintf(path, sizeof(path), "sdmc:/3ds/NSMBHD-Shop/%s.%s",
-             p->title[0] ? p->title : "project", p->file_ext);
-
-    httpcContext context;
-    Result ret = httpcOpenContext(&context, HTTPC_METHOD_GET, p->download_url, 1);
-    if (R_FAILED(ret)) {
-        snprintf(download_status, sizeof(download_status), "Could not connect to download server.");
-        return false;
-    }
-
-    if (strncmp(p->download_url, "https://", 8) == 0)
-        httpcAddDefaultCert(&context, SSLC_DefaultRootCert_DigiCert_EV);
-
-    ret = httpcBeginRequest(&context);
-    u32 status = 0;
-    if (R_SUCCEEDED(ret)) ret = httpcGetResponseStatusCode(&context, &status);
-    if (R_FAILED(ret) || status < 200 || status >= 300) {
-        httpcCloseContext(&context);
-        snprintf(download_status, sizeof(download_status), "Download server returned an error.");
-        return false;
-    }
-
-    FILE *out = fopen(path, "wb");
-    if (!out) {
-        httpcCloseContext(&context);
-        snprintf(download_status, sizeof(download_status), "Could not write to the SD card.");
-        return false;
-    }
-
-    u8 buffer[0x4000];
-    bool ok = true;
-    while (aptMainLoop()) {
-        u32 received = 0;
-        ret = httpcDownloadData(&context, buffer, sizeof(buffer), &received);
-        if (received && fwrite(buffer, 1, received, out) != received) {
-            ok = false;
-            break;
-        }
-        if (ret == HTTPC_RESULTCODE_DOWNLOADPENDING) continue;
-        if (R_FAILED(ret) || received == 0) {
-            if (R_FAILED(ret)) ok = false;
-            break;
-        }
-    }
-
-    fclose(out);
-    httpcCloseContext(&context);
-    if (!ok) {
-        remove(path);
-        snprintf(download_status, sizeof(download_status), "Download failed; incomplete file removed.");
-        return false;
-    }
-    snprintf(download_status, sizeof(download_status), "Saved to /3ds/NSMBHD-Shop on SD card.");
-    return true;
-}
-
 static PrintConsole top, bottom;
 static int category = 0;
 static int project_index = 0;
@@ -185,7 +115,7 @@ static void draw_top(void) {
     consoleSelect(&top);
     printf("\x1b[2J\x1b[H");
     printf("\x1b[46;30m                                                  \x1b[0m\n");
-    printf("\x1b[46;30m   NSMBHD SHOP                         CATALOG    \x1b[0m\n");
+    printf("\x1b[46;30m   MARIO 2D SHOP                         CATALOG    \x1b[0m\n");
     printf("\x1b[46;30m                                                  \x1b[0m\n\n");
     printf("\x1b[36m  COMMUNITY PROJECTS\x1b[0m\n");
     printf("\x1b[90m  Browse fan-made DS and 3DS projects.\x1b[0m\n\n");
@@ -236,7 +166,7 @@ static void draw_bottom(void) {
     consoleSelect(&bottom);
     printf("\x1b[2J\x1b[H");
     printf("\x1b[44;37m                                                  \x1b[0m\n");
-    printf("\x1b[44;37m   NSMBHD SHOP  /  QUICK VIEW                     \x1b[0m\n");
+    printf("\x1b[44;37m   MARIO 2D SHOP  /  QUICK VIEW                     \x1b[0m\n");
     printf("\x1b[44;37m                                                  \x1b[0m\n\n");
 
     if (view == 0) {
@@ -296,7 +226,6 @@ static void draw_all(void) {
 
 int main(void) {
     gfxInitDefault();
-    httpcInit(0);
     consoleInit(GFX_TOP, &top);
     consoleInit(GFX_BOTTOM, &bottom);
     draw_all();
@@ -335,7 +264,6 @@ int main(void) {
         gspWaitForVBlank();
     }
 
-    httpcExit();
     gfxExit();
     return 0;
 }
